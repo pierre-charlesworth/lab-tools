@@ -1,0 +1,9 @@
+{
+    "task_id": "3",
+    "task_description": "Refactor `Calculator.tsx` to use the new Glassmorphism design system. \n1. Update UI to use `.glass-card`, `.glass-panel`, and M3 styled inputs (floating labels). \n2. Ensure type safety for all state variables. \n3. Maintain existing calculation logic but present it in the new 'Premium' layout. \n4. Improve Type Safety: Explicitly type all standard 'any' or implicit types.",
+    "files_to_edit": [
+        "src/components/Calculator.tsx",
+        "src/utils/calculations.ts"
+    ],
+    "task_type": "refactor"
+}

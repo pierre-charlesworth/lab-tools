@@ -1,0 +1,232 @@
+/* ===================================
+   Material Design 3 Design Tokens
+   Clean Scientific Aesthetic
+   =================================== */
+
+:root {
+  /* --- Primary Colors (Teal) --- */
+  --md-primary: #14b8a6; /* Teal-500 */
+  --md-primary-container: #ccfbf1; /* Teal-100 */
+  --md-on-primary: #ffffff;
+  --md-on-primary-container: #0f766e; /* Teal-700 */
+
+  /* --- Secondary Colors (Coral) --- */
+  --md-secondary: #f97316; /* Orange-500/Coral */
+  --md-secondary-container: #fed7aa; /* Orange-200 */
+  --md-on-secondary: #ffffff;
+  --md-on-secondary-container: #c2410c; /* Orange-700 */
+
+  /* --- Surface Colors (Light Mode) --- */
+  --md-surface: #ffffff;
+  --md-surface-variant: #f4f4f5; /* Zinc-100 */
+  --md-surface-container-lowest: #ffffff;
+  --md-surface-container-low: #fafafa; /* Zinc-50 */
+  --md-surface-container: #f4f4f5; /* Zinc-100 */
+  --md-surface-container-high: #e4e4e7; /* Zinc-200 */
+  --md-surface-container-highest: #d4d4d8; /* Zinc-300 */
+
+  --md-on-surface: #18181b; /* Zinc-900 */
+  --md-on-surface-variant: #52525b; /* Zinc-600 */
+
+  /* --- Background --- */
+  --md-background: #fafafa; /* Zinc-50 - Clean light background */
+  --md-on-background: #18181b; /* Zinc-900 */
+
+  /* --- Outline & Border --- */
+  --md-outline: #d4d4d8; /* Zinc-300 */
+  --md-outline-variant: #e4e4e7; /* Zinc-200 */
+
+  /* --- Error Colors --- */
+  --md-error: #dc2626; /* Red-600 */
+  --md-error-container: #fecaca; /* Red-200 */
+  --md-on-error: #ffffff;
+  --md-on-error-container: #991b1b; /* Red-800 */
+
+  /* --- Typography Scale --- */
+  --md-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --md-font-serif: 'Playfair Display', Georgia, serif;
+  --md-font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  /* Font Sizes */
+  --md-font-size-xs: 0.75rem;    /* 12px */
+  --md-font-size-sm: 0.875rem;   /* 14px */
+  --md-font-size-base: 1rem;     /* 16px */
+  --md-font-size-lg: 1.125rem;   /* 18px */
+  --md-font-size-xl: 1.25rem;    /* 20px */
+  --md-font-size-2xl: 1.5rem;    /* 24px */
+  --md-font-size-3xl: 1.875rem;  /* 30px */
+  --md-font-size-4xl: 2.25rem;   /* 36px */
+
+  /* --- Spacing (8dp Grid) --- */
+  --md-space-1: 0.5rem;   /* 8px */
+  --md-space-2: 1rem;     /* 16px */
+  --md-space-3: 1.5rem;   /* 24px */
+  --md-space-4: 2rem;     /* 32px */
+  --md-space-5: 2.5rem;   /* 40px */
+  --md-space-6: 3rem;     /* 48px */
+  --md-space-8: 4rem;     /* 64px */
+  --md-space-12: 6rem;    /* 96px */
+
+  /* --- Border Radius (12px Standard) --- */
+  --md-radius-sm: 0.5rem;   /* 8px */
+  --md-radius: 0.75rem;     /* 12px - Standard */
+  --md-radius-lg: 1rem;     /* 16px */
+  --md-radius-xl: 1.5rem;   /* 24px */
+  --md-radius-full: 9999px; /* Fully rounded */
+
+  /* --- Elevation Shadows --- */
+  --md-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --md-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --md-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --md-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --md-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+  /* --- Transitions --- */
+  --md-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --md-transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --md-transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Legacy compatibility (will be deprecated) */
+  --bg-body: var(--md-background);
+  --text-body: var(--md-on-background);
+}
+
+/* Dark Mode Override (if needed in future) */
+.dark {
+  --md-primary: #14b8a6; /* Teal-500 */
+  --md-primary-container: #0f766e; /* Teal-700 */
+  --md-on-primary: #ffffff;
+  --md-on-primary-container: #ccfbf1;
+
+  --md-secondary: #fb923c; /* Orange-400 */
+  --md-secondary-container: #c2410c; /* Orange-700 */
+  --md-on-secondary: #18181b;
+  --md-on-secondary-container: #fed7aa;
+
+  --md-surface: #18181b; /* Zinc-900 */
+  --md-surface-variant: #27272a; /* Zinc-800 */
+  --md-surface-container-lowest: #0a0a0a;
+  --md-surface-container-low: #18181b;
+  --md-surface-container: #27272a;
+  --md-surface-container-high: #3f3f46; /* Zinc-700 */
+  --md-surface-container-highest: #52525b; /* Zinc-600 */
+
+  --md-on-surface: #fafafa; /* Zinc-50 */
+  --md-on-surface-variant: #a1a1aa; /* Zinc-400 */
+
+  --md-background: #09090b; /* Lab Dark */
+  --md-on-background: #fafafa;
+
+  --md-outline: #3f3f46; /* Zinc-700 */
+  --md-outline-variant: #27272a; /* Zinc-800 */
+
+  --bg-body: var(--md-background);
+  --text-body: var(--md-on-background);
+}
+
+/* ===================================
+   Base Styles
+   =================================== */
+
+body {
+  font-family: var(--md-font-family);
+  background-color: var(--md-background);
+  color: var(--md-on-background);
+  transition: background-color var(--md-transition-slow), color var(--md-transition-slow);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===================================
+   Utility Classes
+   =================================== */
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Custom thin scrollbar for other areas */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(161, 161, 170, 0.2);
+  border-radius: var(--md-radius);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(161, 161, 170, 0.4);
+}
+
+/* Safe area spacing for mobile devices */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ===================================
+   Glassmorphism Effects
+   =================================== */
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .glass-panel {
+  background: rgba(24, 24, 27, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+}
+
+.dark .glass-card {
+  background: rgba(39, 39, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.glass-card-hover {
+  transition: all var(--md-transition-base);
+}
+
+.glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.12);
+  transform: translateY(-2px);
+}
+
+.dark .glass-card-hover:hover {
+  background: rgba(39, 39, 42, 0.8);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* Premium gradient background */
+.premium-bg {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #dbeafe 100%);
+}
+
+.dark .premium-bg {
+  background: linear-gradient(135deg, #0a0a0a 0%, #18181b 50%, #27272a 100%);
+}

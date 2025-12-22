@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">BioCalc</string>
+    <string name="title_activity_main">BioCalc</string>
+    <string name="package_name">com.polissilab.biocalc</string>
+    <string name="custom_url_scheme">com.polissilab.biocalc</string>
+</resources>

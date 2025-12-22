@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx cap:*)",
+      "Bash(node node_modules/@capacitor/cli/bin/capacitor add:*)",
+      "Bash(npm install:*)",
+      "Bash(npm view:*)",
+      "Bash(npm ci:*)",
+      "Bash(npm run build:*)",
+      "Bash(node:*)",
+      "Bash(if exist dist rmdir /s /q dist)",
+      "Bash(if exist node_modules.vite rmdir /s /q node_modules.vite)"
+    ]
+  }
+}
