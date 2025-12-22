@@ -1,11 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
 import { Sidebar } from './components/Sidebar';
 import { BottomNavigation } from './components/Navigation';
-=======
-import { NavigationRail, BottomNavigation } from './components/Navigation';
->>>>>>> 75e653eca91dd2551c907faf516d6c633795c934
 import { TopBar } from './components/TopBar';
 import { CalculatorView } from './components/CalculatorView';
 import { TimerView } from './components/TimerView';
@@ -200,7 +196,6 @@ const App: React.FC = () => {
   const activeTimers = timers.filter(t => t.status === 'running' || t.status === 'paused');
 
   return (
-<<<<<<< HEAD
     <div className="flex h-screen w-full premium-bg font-sans text-[var(--md-on-background)] selection:bg-teal-500/30 selection:text-teal-800 dark:selection:text-teal-200 transition-colors duration-300 overflow-hidden">
 
       {/* Desktop Sidebar with Glassmorphism */}
@@ -209,15 +204,6 @@ const App: React.FC = () => {
         onViewChange={setCurrentView}
         isDarkMode={isDarkMode}
         onToggleTheme={toggleTheme}
-=======
-    <div className="flex h-screen w-full bg-zinc-50 dark:bg-lab-dark font-sans text-zinc-900 dark:text-zinc-100 selection:bg-emerald-500/30 selection:text-emerald-800 dark:selection:text-emerald-200 transition-colors duration-300 overflow-hidden">
-      
-      {/* Desktop Navigation Rail */}
-      <NavigationRail 
-        currentView={currentView} 
-        onViewChange={setCurrentView} 
-        onNewExperiment={() => handleAddExperiment()}
->>>>>>> 75e653eca91dd2551c907faf516d6c633795c934
       />
 
       {/* Main Content Area */}

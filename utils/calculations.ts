@@ -3,7 +3,7 @@ import { CalculatorState, CalculationResult, TrackingStatus, GrowthDataPoint } f
 
 export const DEFAULT_CARRYING_CAPACITY = 4.0;
 
-export const calculateCarryingCapacity = (targetHarvestOD: string | number) => {
+export const calculateCarryingCapacity = (targetHarvestOD: string | number): number => {
   const harvestOD = parseFloat(String(targetHarvestOD)) || 0;
   return Math.max(DEFAULT_CARRYING_CAPACITY, harvestOD * 1.2);
 };
@@ -37,9 +37,9 @@ export const calculateResults = (
   }
 
   // 1. Dilution Calculation
-  let v1 = 0; // Inoculum Volume
-  let vMedia = 0; // Media Volume
-  let calculationError = undefined;
+  let v1: number = 0; // Inoculum Volume
+  let vMedia: number = 0; // Media Volume
+  let calculationError: string | undefined = undefined;
 
   if (state.calculationMode === 'fixed_media') {
     if (inocOD <= startOD) {
@@ -58,7 +58,7 @@ export const calculateResults = (
   }
 
   // 2. Growth Calculation (Logistic Model with Lag)
-  let totalMinutes = 0;
+  let totalMinutes: number = 0;
   
   if (harvestOD >= carryingCapacity) {
     calculationError = `Target OD > Capacity (${carryingCapacity.toFixed(1)}).`;
@@ -106,7 +106,7 @@ export const calculateTracking = (
   const lagTime = parseFloat(String(state.lagTime)) || 0;
   const K = results.carryingCapacity;
   
-  let currentOD = startOD;
+  let currentOD: number = startOD;
 
   if (elapsedMinutes > lagTime) {
     const growthTime = elapsedMinutes - lagTime;
@@ -143,7 +143,7 @@ export const generateChartData = (
   const mu = Math.log(2) / doubleTime;
 
   // Stationary start (approx 95% of K)
-  let stationaryStart = 0;
+  let stationaryStart: number = 0;
   try {
     const term95 = (1/0.95) - 1; 
     const termStart = (K/startOD) - 1;
