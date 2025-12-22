@@ -21,14 +21,14 @@ export const MiniTimerCard: React.FC<MiniTimerCardProps> = ({ timer, currentTime
   let timeDisplay = "";
   let progress = 0;
   let Icon = Clock;
-  let iconColor = "text-blue-500";
-  let barColor = "bg-blue-500";
+  let iconColor = "text-[var(--md-primary)]";
+  let barColor = "bg-[var(--md-primary)]";
 
   if (isScheduled) {
     // Future
     Icon = CalendarClock;
-    iconColor = "text-zinc-400";
-    barColor = "bg-zinc-400";
+    iconColor = "text-[var(--md-on-surface-variant)]";
+    barColor = "bg-[var(--md-on-surface-variant)]";
     labelText = "Starts in";
 
     const diffMs = startTime - now;
@@ -69,21 +69,21 @@ export const MiniTimerCard: React.FC<MiniTimerCardProps> = ({ timer, currentTime
         relative overflow-hidden w-[140px] h-14 rounded-xl border
         flex shrink-0 select-none opacity-90 transition-colors cursor-pointer
         ${isScheduled
-          ? 'bg-zinc-50/50 dark:bg-zinc-900/50 border-dashed border-zinc-300 dark:border-zinc-700'
-          : 'bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 hover:border-blue-500/30'
+          ? 'glass-panel border-dashed border-[var(--md-outline)]'
+          : 'glass-card border-[var(--md-outline-variant)] hover:border-[var(--md-primary)]'
         }
       `}
     >
       <div className="relative z-10 w-full h-full px-3 py-1.5 flex flex-col justify-between">
         <div className="flex items-center gap-1.5">
           <Icon className={`w-3 h-3 ${iconColor}`} />
-          <span className="text-[10px] font-bold uppercase text-zinc-500 truncate max-w-[90px]">
+          <span className="text-[10px] font-bold uppercase text-[var(--md-on-surface-variant)] truncate max-w-[90px]">
             {timer.label}
           </span>
         </div>
         <div className="flex flex-col">
-          <span className="text-[9px] text-zinc-400 uppercase leading-none">{labelText}</span>
-          <span className={`text-xs font-bold font-mono ${isScheduled ? 'text-zinc-500 dark:text-zinc-400' : 'text-zinc-900 dark:text-zinc-100'}`}>
+          <span className="text-[9px] text-[var(--md-on-surface-variant)] uppercase leading-none">{labelText}</span>
+          <span className={`text-xs font-bold font-mono ${isScheduled ? 'text-[var(--md-on-surface-variant)]' : 'text-[var(--md-on-surface)]'}`}>
             {timeDisplay}
           </span>
         </div>

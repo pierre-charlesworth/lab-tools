@@ -1,9 +1,10 @@
 
 import React, { useMemo } from 'react';
 import { Experiment, CalculationResult, GrowthDataPoint } from '../types';
-import { FlaskConical, Clock, Droplets, AlertCircle, Play, RotateCcw, Timer, Info, Hourglass, HelpCircle, Syringe, Ruler, Minimize2 } from 'lucide-react';
+import { FlaskConical, Clock, Droplets, AlertCircle, Play, RotateCcw, Timer, Info, Hourglass, Syringe, Ruler, Minimize2 } from 'lucide-react';
 import { GrowthChart } from './GrowthChart';
 import { calculateResults, calculateTracking, generateChartData } from '../utils/calculations';
+import { M3TextField } from './ui/M3TextField';
 
 interface CalculatorProps {
   experiment: Experiment;
@@ -11,95 +12,6 @@ interface CalculatorProps {
   isDarkMode: boolean;
   currentTime: Date;
 }
-
-const InfoTooltip: React.FC<{ text: string }> = ({ text }) => (
-  <div className="group/tooltip relative inline-flex items-center justify-center align-middle normal-case z-50">
-    <div className="cursor-help text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)] transition-colors p-1.5 -m-1.5 rounded-full hover:bg-[var(--md-surface-container)]">
-      <HelpCircle className="w-4 h-4" />
-    </div>
-    <div className="
-      absolute bottom-full right-0 mb-2 w-48
-      px-3 py-2
-      bg-[var(--md-on-surface)] dark:bg-[var(--md-surface-container-highest)]
-      text-[var(--md-surface)] dark:text-[var(--md-on-surface)]
-      text-xs font-normal tracking-wide leading-5
-      rounded-[var(--md-radius)] shadow-[var(--md-shadow-md)]
-      opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible
-      transition-all duration-200 ease-out transform scale-95 group-hover/tooltip:scale-100 origin-bottom-right
-      pointer-events-none text-left z-50
-    ">
-      {text}
-    </div>
-  </div>
-);
-
-// M3 Compliant Outlined Text Field
-const M3TextField: React.FC<{
-  label: string;
-  value: string | number;
-  onChange: (val: string) => void;
-  disabled?: boolean;
-  type?: string;
-  inputMode?: "text" | "decimal" | "numeric";
-  step?: string;
-  suffix?: string;
-  tooltip?: string;
-  icon?: React.ElementType;
-}> = ({ label, value, onChange, disabled, type = "number", inputMode = "decimal", step, suffix, tooltip, icon: Icon }) => {
-  return (
-    <div className="relative hover:z-30 transition-z duration-0">
-      <input
-        type={type}
-        inputMode={inputMode}
-        step={step}
-        disabled={disabled}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder=" " /* Required for peer-placeholder-shown */
-        className={`
-          peer block w-full h-14 rounded-[var(--md-radius)] border bg-transparent px-4 py-2.5
-          text-base font-mono text-[var(--md-on-surface)]
-          border-[var(--md-outline)]
-          focus:border-[var(--md-primary)] focus:ring-1 focus:ring-[var(--md-primary)] focus:outline-none
-          disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-[var(--md-surface-container)]
-          placeholder-transparent
-          transition-colors duration-200
-          appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]
-          ${Icon ? 'pl-11' : ''}
-          ${suffix || tooltip ? 'pr-12' : ''}
-        `}
-      />
-      
-      {/* Floating Label */}
-      <label className={`
-        absolute left-3 top-0 -translate-y-1/2 px-1 text-xs text-[var(--md-on-surface-variant)] transition-all duration-200
-        bg-[var(--md-surface)]
-        peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-[var(--md-on-surface-variant)]
-        peer-focus:top-0 peer-focus:text-xs peer-focus:text-[var(--md-primary)]
-        peer-disabled:opacity-50
-        ${Icon ? 'peer-placeholder-shown:left-11' : ''}
-        pointer-events-none select-none truncate max-w-[calc(100%-2rem)]
-      `}>
-        {label}
-      </label>
-
-      {/* Leading Icon */}
-      {Icon && (
-        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--md-on-surface-variant)] pointer-events-none peer-focus:text-[var(--md-primary)] transition-colors duration-200">
-          <Icon className="w-5 h-5" />
-        </div>
-      )}
-
-      {/* Trailing Suffix / Tooltip */}
-      {(suffix || tooltip) && (
-        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
-           {suffix && <span className="text-[var(--md-on-surface-variant)] text-sm font-medium pointer-events-none">{suffix}</span>}
-           {tooltip && <InfoTooltip text={tooltip} />}
-        </div>
-      )}
-    </div>
-  );
-};
 
 export const Calculator: React.FC<CalculatorProps> = ({ experiment, onUpdate, isDarkMode, currentTime }) => {
   

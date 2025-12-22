@@ -1,0 +1,8 @@
+{
+    "task_id": "4c",
+    "task_description": "Complete the Timer Component Refactor by updating `MiniTimerCard.tsx`. \n\n**INSTRUCTIONS**:\n1. Update all colors to use `var(--md-...)` tokens (replacing hardcoded zinc/blue).\n2. Apply `.glass-card` / `.glass-panel` classes where appropriate to match the Dashboard look.\n3. Verify type safety.",
+    "files_to_edit": [
+        "src/components/MiniTimerCard.tsx"
+    ],
+    "task_type": "refactor"
+}
