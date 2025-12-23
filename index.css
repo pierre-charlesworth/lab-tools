@@ -230,3 +230,79 @@ body {
 .dark .premium-bg {
   background: linear-gradient(135deg, #0a0a0a 0%, #18181b 50%, #27272a 100%);
 }
+
+/* ===================================
+   Animations (Polyfill for tailwindcss-animate)
+   =================================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.5); }
+  to { transform: scale(1); }
+}
+
+@keyframes slideInFromLeft {
+  from { transform: translateX(-1rem); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideInFromBottom {
+  from { transform: translateY(2rem); }
+  to { transform: translateY(0); }
+}
+
+@keyframes popInRight {
+  0% { opacity: 0; transform: translateX(-10px) scale(0.95); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes popInUp {
+  0% { opacity: 0; transform: translateY(20px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Base animation class */
+.animate-in {
+  /* Default duration if not specified */
+  animation-duration: 300ms;
+  animation-fill-mode: forwards;
+  /* Start invisible so it can fade in */
+  opacity: 0; 
+}
+
+/* Atomic animation classes */
+.fade-in {
+  animation-name: fadeIn;
+}
+
+.slide-in-from-left-4 {
+  animation-name: slideInFromLeft;
+}
+
+.slide-in-from-bottom-8 {
+  animation-name: slideInFromBottom;
+}
+
+.zoom-in-50 {
+  /* CSS animations don't easily compose like this without vars, 
+     so we point to the composite keyframe if the specific combo is detected,
+     or just rely on the keyframe defined in .slide-in... if it handles scale too.
+     
+     See below for the composite overrides matching Navigation.tsx usage.
+  */
+}
+
+/* Composite Overrides for "Reaction Pop" */
+/* Matches: animate-in fade-in zoom-in-50 slide-in-from-left-4 */
+.animate-in.slide-in-from-left-4.zoom-in-50 {
+  animation-name: popInRight;
+}
+
+/* Matches: animate-in fade-in slide-in-from-bottom-8 zoom-in-50 */
+.animate-in.slide-in-from-bottom-8.zoom-in-50 {
+  animation-name: popInUp;
+}
