@@ -85,10 +85,86 @@ export const NEB_Q5_HiFi: PCRKitPreset = {
 };
 
 /**
+ * Taq Polymerase (Standard)
+ *
+ * Generic Taq polymerase for routine PCR applications
+ *
+ * Standard 50 µL Reaction:
+ * - 10X Taq Buffer: 5 µL (1X final)
+ * - 25 mM MgCl2: 3 µL (1.5 mM final)
+ * - 10 mM dNTPs: 1 µL (200 µM final)
+ * - 10 µM Forward Primer: 2.5 µL (0.5 µM final)
+ * - 10 µM Reverse Primer: 2.5 µL (0.5 µM final)
+ * - Template DNA: variable
+ * - Taq DNA Polymerase: 0.25 µL (5 U/µL = 1.25 units)
+ * - Nuclease-Free Water: to 50 µL
+ */
+export const Taq_Standard: PCRKitPreset = {
+  id: 'taq-standard',
+  name: 'Taq Polymerase (Standard)',
+  manufacturer: 'Generic',
+  description: 'Standard Taq polymerase for routine PCR amplification of targets up to 5 kb.',
+  defaultReactionVolume: 50,
+  supportsEnhancer: false,
+  reagents: [
+    {
+      name: '10X Taq Buffer',
+      stockConcentration: '10X',
+      finalConcentration: '1X',
+      volumePerReaction: 5 // 50 µL × (1/10) = 5 µL
+    },
+    {
+      name: '25 mM MgCl2',
+      stockConcentration: '25 mM',
+      finalConcentration: '1.5 mM',
+      volumePerReaction: 3 // (1.5 mM / 25 mM) × 50 µL = 3 µL
+    },
+    {
+      name: '10 mM dNTPs',
+      stockConcentration: '10 mM',
+      finalConcentration: '200 µM',
+      volumePerReaction: 1
+    },
+    {
+      name: '10 µM Forward Primer',
+      stockConcentration: '10 µM',
+      finalConcentration: '0.5 µM',
+      volumePerReaction: 2.5
+    },
+    {
+      name: '10 µM Reverse Primer',
+      stockConcentration: '10 µM',
+      finalConcentration: '0.5 µM',
+      volumePerReaction: 2.5
+    },
+    {
+      name: 'Template DNA',
+      stockConcentration: 'variable',
+      finalConcentration: '10-100 ng',
+      volumePerReaction: 2
+    },
+    {
+      name: 'Taq DNA Polymerase',
+      stockConcentration: '5 U/µL',
+      finalConcentration: '0.025 U/µL',
+      volumePerReaction: 0.25 // 0.25 µL × 5 U/µL = 1.25 units
+    }
+  ],
+  notes: [
+    'Standard Taq lacks 3\'→5\' exonuclease (proofreading) activity',
+    'Typical annealing temperature: Tm - 5°C',
+    'Extension time: 1 min/kb',
+    'Optimal for targets <5 kb',
+    'Add polymerase last to prevent degradation'
+  ]
+};
+
+/**
  * All available PCR kit presets
  */
 export const PCR_KIT_PRESETS: PCRKitPreset[] = [
-  NEB_Q5_HiFi
+  NEB_Q5_HiFi,
+  Taq_Standard
 ];
 
 /**

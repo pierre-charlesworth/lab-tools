@@ -114,7 +114,7 @@ export const VisualCycler: React.FC = () => {
       lastTimestampRef.current = timestamp;
 
       setCurrentTime(prev => {
-        const next = prev + deltaTime * 10; // Speed up 10x for visualization
+        const next = prev + deltaTime; // Real-time speed (1x)
         if (next >= protocolData.totalTime) {
           setIsPlaying(false);
           return protocolData.totalTime;
@@ -168,9 +168,25 @@ export const VisualCycler: React.FC = () => {
   const graphWidth = width - padding.left - padding.right;
   const graphHeight = height - padding.top - padding.bottom;
 
-  // Scale functions
+  // Scale functions with live scrolling
   const xScale = (time: number) => {
-    return padding.left + (time / protocolData.totalTime) * graphWidth;
+    // When playing, show a 10-minute (600 second) window centered on current time
+    // Window: [currentTime - 2min, currentTime + 8min]
+    if (isPlaying) {
+      const windowSize = 600; // 10 minutes in seconds
+      const windowStart = Math.max(0, currentTime - 120); // 2 minutes before current
+      const windowEnd = windowStart + windowSize;
+
+      // Clamp to protocol bounds
+      const actualStart = Math.max(0, windowStart);
+      const actualEnd = Math.min(protocolData.totalTime, windowEnd);
+
+      const normalizedTime = (time - actualStart) / (actualEnd - actualStart);
+      return padding.left + normalizedTime * graphWidth;
+    } else {
+      // When paused/stopped, show full protocol
+      return padding.left + (time / protocolData.totalTime) * graphWidth;
+    }
   };
 
   const yScale = (temp: number) => {
@@ -179,29 +195,59 @@ export const VisualCycler: React.FC = () => {
     return height - padding.bottom - ((temp - (protocolData.minTemp - padding_temp)) / (range + 2 * padding_temp)) * graphHeight;
   };
 
-  // Generate SVG path
+  // Generate SVG path (with filtering for visible window when playing)
   const pathData = useMemo(() => {
     if (protocolData.points.length === 0) return '';
 
-    const pathCommands = protocolData.points.map((point, index) => {
+    let visiblePoints = protocolData.points;
+
+    // When playing, only show points within the visible window
+    if (isPlaying) {
+      const windowSize = 600; // 10 minutes
+      const windowStart = Math.max(0, currentTime - 120);
+      const windowEnd = windowStart + windowSize;
+
+      visiblePoints = protocolData.points.filter(p =>
+        p.time >= windowStart && p.time <= windowEnd
+      );
+
+      if (visiblePoints.length === 0) return '';
+    }
+
+    const pathCommands = visiblePoints.map((point, index) => {
       const x = xScale(point.time);
       const y = yScale(point.temperature);
       return index === 0 ? `M ${x} ${y}` : `L ${x} ${y}`;
     });
 
     return pathCommands.join(' ');
-  }, [protocolData.points]);
+  }, [protocolData.points, isPlaying, currentTime]);
 
   // Generate gradient fill path (path + baseline)
   const fillPath = useMemo(() => {
-    if (protocolData.points.length === 0) return '';
+    if (protocolData.points.length === 0 || !pathData) return '';
+
+    let visiblePoints = protocolData.points;
+
+    // When playing, only show points within the visible window
+    if (isPlaying) {
+      const windowSize = 600;
+      const windowStart = Math.max(0, currentTime - 120);
+      const windowEnd = windowStart + windowSize;
+
+      visiblePoints = protocolData.points.filter(p =>
+        p.time >= windowStart && p.time <= windowEnd
+      );
+
+      if (visiblePoints.length === 0) return '';
+    }
 
     const baseline = height - padding.bottom;
-    const firstX = xScale(protocolData.points[0].time);
-    const lastX = xScale(protocolData.points[protocolData.points.length - 1].time);
+    const firstX = xScale(visiblePoints[0].time);
+    const lastX = xScale(visiblePoints[visiblePoints.length - 1].time);
 
     return `${pathData} L ${lastX} ${baseline} L ${firstX} ${baseline} Z`;
-  }, [pathData, protocolData.points]);
+  }, [pathData, protocolData.points, isPlaying, currentTime]);
 
   // Current position marker
   const markerX = xScale(currentTime);

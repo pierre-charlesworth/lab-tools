@@ -107,7 +107,7 @@ export const PrimerAnalyst: React.FC = () => {
             value={forwardPrimer}
             onChange={(e) => setForwardPrimer(e.target.value.toUpperCase())}
             placeholder="Enter forward primer sequence (e.g., ATGCGATCGTAGCTAG...)"
-            className="w-full h-24 p-3 rounded-xl bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] resize-none focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--md-on-surface)] font-mono text-sm placeholder:text-[var(--md-on-surface-variant)] placeholder:font-sans"
+            className="w-full h-16 p-3 rounded-xl bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] resize-none focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--md-on-surface)] font-mono text-sm placeholder:text-[var(--md-on-surface-variant)] placeholder:font-sans"
           />
 
           {/* Forward Primer Analysis */}
@@ -175,7 +175,7 @@ export const PrimerAnalyst: React.FC = () => {
             value={reversePrimer}
             onChange={(e) => setReversePrimer(e.target.value.toUpperCase())}
             placeholder="Enter reverse primer sequence (e.g., CTAGCTAGCGATCGCAT...)"
-            className="w-full h-24 p-3 rounded-xl bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-[var(--md-on-surface)] font-mono text-sm placeholder:text-[var(--md-on-surface-variant)] placeholder:font-sans"
+            className="w-full h-16 p-3 rounded-xl bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-[var(--md-on-surface)] font-mono text-sm placeholder:text-[var(--md-on-surface-variant)] placeholder:font-sans"
           />
 
           {/* Reverse Primer Analysis */}

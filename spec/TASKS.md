@@ -21,3 +21,4 @@
 
 | 11 | **Library Module - Core**: Implement "Save to Library" for Growth/Timers and "Recall" functionality. | Future | 2,7 |
 | 12 | **Desktop Nav Refactor**: align sidebar options with mobile (Add PCR), add collapsible state (mini-sidebar). | Done | 10 |
+| 13 | **PCR Refinements**: Compact Primer inputs, multi-kit Master Mix dropdown, real-time scrolling Cycler graph. | Done | 10 |

@@ -1,15 +1,18 @@
 import React, { useState, useMemo } from 'react';
 import { Beaker, Info } from 'lucide-react';
-import { NEB_Q5_HiFi } from '../../data/pcr-kits';
-import { MasterMixCalculation } from '../../types/pcr';
+import { PCR_KIT_PRESETS } from '../../data/pcr-kits';
+import { MasterMixCalculation, PCRKitPreset } from '../../types/pcr';
 
 export const MasterMix: React.FC = () => {
+  const [selectedKitId, setSelectedKitId] = useState(PCR_KIT_PRESETS[0].id);
   const [reactionVolume, setReactionVolume] = useState(50);
   const [sampleCount, setSampleCount] = useState(1);
   const [overfillEnabled, setOverfillEnabled] = useState(true);
   const [enhancerEnabled, setEnhancerEnabled] = useState(false);
 
-  const kit = NEB_Q5_HiFi;
+  const kit = useMemo(() => {
+    return PCR_KIT_PRESETS.find(k => k.id === selectedKitId) || PCR_KIT_PRESETS[0];
+  }, [selectedKitId]);
 
   // Calculate master mix volumes
   const calculation = useMemo((): MasterMixCalculation => {
@@ -65,6 +68,28 @@ export const MasterMix: React.FC = () => {
         <div>
           <h1 className="text-2xl font-bold text-[var(--md-on-surface)]">Master Mix Calculator</h1>
           <p className="text-sm text-[var(--md-on-surface-variant)]">{kit.name} - {kit.manufacturer}</p>
+        </div>
+      </div>
+
+      {/* Kit Selector */}
+      <div className="glass-card rounded-2xl p-6 border border-[var(--md-outline-variant)] space-y-4">
+        <h3 className="font-semibold text-[var(--md-on-surface)]">PCR Kit</h3>
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-[var(--md-on-surface)]">
+            Select Kit
+          </label>
+          <select
+            value={selectedKitId}
+            onChange={(e) => setSelectedKitId(e.target.value)}
+            className="w-full px-4 py-2 rounded-xl bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-[var(--md-on-surface)]"
+          >
+            {PCR_KIT_PRESETS.map((preset) => (
+              <option key={preset.id} value={preset.id}>
+                {preset.name} ({preset.manufacturer})
+              </option>
+            ))}
+          </select>
+          <p className="text-xs text-[var(--md-on-surface-variant)]">{kit.description}</p>
         </div>
       </div>
 
