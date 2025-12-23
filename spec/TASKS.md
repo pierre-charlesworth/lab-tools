@@ -13,3 +13,4 @@
 | 8 | **PCR Module - Core**: Implement Tm calculation utility and Master Mix UI. | Future | None |
 
 | 9 | **Top Bar Refactor**: Remove logo text and theme button. Make background more glassy. | Done | 2 |
+| 9b | **Top Bar Refinement**: Remove logo icon. Left-align mini timers on mobile with horizontal scroll. | In Progress | 9 |
