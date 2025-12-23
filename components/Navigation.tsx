@@ -90,7 +90,7 @@ export const BottomNavigation: React.FC<NavigationProps> = ({ currentView, onVie
         onNewExperiment();
         break;
       case 'pcr':
-        // Future: Navigate to PCR module
+        onViewChange('pcr');
         break;
       case 'timer':
         onViewChange('timers');

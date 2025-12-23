@@ -76,4 +76,4 @@ export interface TrackingStatus {
   completionPercentage: number;
 }
 
-export type View = 'dashboard' | 'calculator' | 'experiments' | 'timers' | 'protocols' | 'settings';
+export type View = 'dashboard' | 'calculator' | 'experiments' | 'timers' | 'protocols' | 'pcr' | 'settings';

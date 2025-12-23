@@ -35,3 +35,24 @@
   - Added Cascading Action Menu (Growth, PCR, Timer, Protocol).
   - Removed "Growth" and "Timers" tabs.
   - Removed Top Bar "New" button on mobile.
+
+## Task 10b - Top Bar Material Fix
+- **Status**: Completed
+- **Goal**: Standardize glassmorphism.
+- **Changes**: Applied `glass-panel` class and variable border color to TopBar to match Bottom Nav.
+
+## Task 8a - PCR Primer Analyst
+- **Status**: Completed
+- **Goal**: Real-time validation of PCR primers.
+- **Changes**:
+  - Implemented Nearest-Neighbor Tm engine (SantaLucia 1998).
+  - Created Primer Analyst UI with real-time feedback.
+  - Added Traffic Light system (Green/Yellow/Red) for Tm and GC quality.
+
+## Task 8b - PCR Master Mix
+- **Status**: Completed
+- **Goal**: Kit-aware Master Mix Calculator.
+- **Changes**:
+  - Implemented `PCRKitPreset` system with "NEB Q5" data.
+  - Created interactive Calculator with Overfill logic (+10%).
+  - Added "Enhancer" toggle that dynamically replaces water volume.

@@ -7,6 +7,7 @@ import { CalculatorView } from './components/CalculatorView';
 import { TimerView } from './components/TimerView';
 import { DashboardView } from './components/DashboardView';
 import { ProtocolView } from './components/ProtocolView';
+import { PCRView } from './components/PCRView';
 import { Experiment, StandaloneTimer, View, Protocol } from './types';
 import { Construction } from 'lucide-react';
 import { AIProtocolModal } from './components/AIProtocolModal';
@@ -281,6 +282,10 @@ const App: React.FC = () => {
           
           {currentView === 'experiments' && (
              <PlaceholderView title="Experiment Library" icon={Construction} />
+          )}
+
+          {currentView === 'pcr' && (
+             <PCRView />
           )}
 
           {currentView === 'settings' && (
