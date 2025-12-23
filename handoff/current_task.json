@@ -1,9 +1,6 @@
 {
-    "task_id": "14",
-    "task_description": "Sidebar UX Polish: 'New' cascade menu, Square icons in collapsed state, Theme Toggle at bottom.",
-    "files_to_edit": [
-        "components/Navigation.tsx",
-        "App.tsx"
-    ],
-    "task_type": "refactor"
+    "task_id": null,
+    "task_description": "No active task. Waiting for user input.",
+    "files_to_edit": [],
+    "task_type": "idle"
 }
