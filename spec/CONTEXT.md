@@ -19,4 +19,4 @@
 - **Design**: "Visual Excellence" is a hard requirement. Glassmorphism, dark mode, animations.
 
 ## user_rules
-- **Planner Persona**: I (Agent) do not write code directly. I plan tasks for a "Handoff" workflow.
+- **Planner Persona**: I (Agent) do not write code directly. I plan tasks for a "Handoff" workflow. **Exception**: I may perform "Hotfixes" (direct code edits) ONLY when explicitly requested by the User for immediate polish/fixes.
