@@ -9,17 +9,36 @@ interface NavigationProps {
   onNewExperiment: () => void;
 }
 
-export const NavigationRail: React.FC<NavigationProps> = ({ currentView, onViewChange, onNewExperiment }) => {
+export const NavigationRail: React.FC<NavigationProps & { isDarkMode: boolean; onToggleTheme: () => void }> = ({ currentView, onViewChange, onNewExperiment, isDarkMode, onToggleTheme }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isNewMenuOpen, setIsNewMenuOpen] = useState(false);
+
+  const handleNewAction = (action: 'growth' | 'pcr' | 'timer' | 'protocol') => {
+    setIsNewMenuOpen(false);
+    switch (action) {
+      case 'growth':
+        onNewExperiment();
+        break;
+      case 'pcr':
+        onViewChange('pcr');
+        break;
+      case 'timer':
+        onViewChange('timers');
+        break;
+      case 'protocol':
+        onViewChange('protocols');
+        break;
+    }
+  };
 
   return (
     <nav className={`hidden md:flex flex-col justify-between h-screen bg-white dark:bg-lab-card border-r border-zinc-200 dark:border-white/5 py-6 z-40 shrink-0 transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-64'}`}>
       <div className="flex flex-col gap-8">
         {/* Header with Logo and Toggle */}
-        <div className="flex items-center justify-between px-4">
+        <div className={`flex items-center px-4 ${isCollapsed ? 'justify-center' : 'justify-between'}`}>
           <button
             onClick={() => onViewChange('dashboard')}
-            className="text-emerald-600 dark:text-emerald-500 hover:scale-110 transition-transform duration-200 flex items-center gap-3"
+            className={`text-emerald-600 dark:text-emerald-500 hover:scale-110 transition-transform duration-200 flex items-center ${isCollapsed ? 'justify-center' : 'gap-3'}`}
             title="BioCalc Home"
           >
             <FlaskConical className="w-8 h-8 shrink-0" />
@@ -28,83 +47,101 @@ export const NavigationRail: React.FC<NavigationProps> = ({ currentView, onViewC
             </span>
           </button>
 
-          {/* Collapse Toggle Button */}
+          {/* Collapse Toggle Button - Only visible when expanded to avoid clutter in collapsed mode, OR position absolute? 
+              Actually user just wants square icons. Let's keep toggle but maybe adjust placement if needed. 
+              For now keeping functionality but ensuring layout handles 'w-20' correctly.
+          */}
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="w-8 h-8 rounded-lg hover:bg-zinc-100 dark:hover:bg-white/5 flex items-center justify-center transition-colors"
-            title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+            className={`w-8 h-8 rounded-lg hover:bg-zinc-100 dark:hover:bg-white/5 flex items-center justify-center transition-colors ${isCollapsed ? 'hidden' : 'flex'}`}
+            title="Collapse Sidebar"
           >
-            {isCollapsed ? (
-              <ChevronRight className="w-5 h-5 text-zinc-500 dark:text-zinc-400" />
-            ) : (
-              <ChevronLeft className="w-5 h-5 text-zinc-500 dark:text-zinc-400" />
-            )}
+            <ChevronLeft className="w-5 h-5 text-zinc-500 dark:text-zinc-400" />
           </button>
         </div>
 
-        {/* FAB - New Experiment */}
-        <div className={`flex ${isCollapsed ? 'justify-center' : 'px-4'}`}>
+        {/* If collapsed, we need a way to expand. Put expand button at bottom or make logo clickable?
+           Common pattern: Collapse button is always visible. Let's fix the header layout above:
+        */}
+        {isCollapsed && (
           <button
-            onClick={onNewExperiment}
-            className={`bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-2xl flex items-center justify-center hover:shadow-md hover:bg-emerald-200 dark:hover:bg-emerald-900/50 transition-all active:scale-95 group ${isCollapsed ? 'w-12 h-12' : 'w-full h-12 gap-3'}`}
-            title="New Experiment"
+            onClick={() => setIsCollapsed(false)}
+            className="self-center mt-[-20px] mb-4 w-6 h-6 rounded-full bg-zinc-100 dark:bg-white/10 flex items-center justify-center hover:scale-110 transition"
+            title="Expand"
           >
-            <Plus className="w-6 h-6 group-hover:rotate-90 transition-transform duration-300 shrink-0" />
-            <span className={`font-medium whitespace-nowrap overflow-hidden transition-all duration-300 ${isCollapsed ? 'w-0 opacity-0' : 'w-32 opacity-100 ml-2'}`}>
-              New Experiment
+            <ChevronRight className="w-3 h-3 text-zinc-500 dark:text-zinc-400" />
+          </button>
+        )}
+
+
+        {/* FAB - New (Cascade) */}
+        <div className={`relative flex ${isCollapsed ? 'justify-center' : 'px-4'}`}>
+          <button
+            onClick={() => setIsNewMenuOpen(!isNewMenuOpen)}
+            className={`bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-2xl flex items-center justify-center hover:shadow-md hover:bg-emerald-200 dark:hover:bg-emerald-900/50 transition-all active:scale-95 group ${isCollapsed ? 'w-12 h-12' : 'w-full h-12 gap-3'}`}
+            title="Create New..."
+          >
+            <Plus className={`w-6 h-6 transition-transform duration-300 shrink-0 ${isNewMenuOpen ? 'rotate-45' : 'group-hover:rotate-90'}`} />
+            <span className={`font-medium whitespace-nowrap overflow-hidden transition-all duration-300 ${isCollapsed ? 'w-0 opacity-0' : 'w-10 opacity-100 ml-2'}`}>
+              New
             </span>
           </button>
+
+          {/* Cascade Menu (Desktop Popover) */}
+          {isNewMenuOpen && (
+            <>
+              <div className="fixed inset-0 z-40" onClick={() => setIsNewMenuOpen(false)} />
+              <div className={`absolute top-0 left-full ml-2 z-50 flex flex-col gap-2 min-w-[180px] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl p-2 shadow-xl animate-in fade-in slide-in-from-left-4 duration-200`}>
+                <button onClick={() => handleNewAction('growth')} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 transition-colors text-left">
+                  <FlaskConical className="w-5 h-5" />
+                  <span className="font-medium text-sm">Growth Curve</span>
+                </button>
+                <button onClick={() => handleNewAction('pcr')} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-purple-50 dark:hover:bg-purple-900/20 text-purple-700 dark:text-purple-400 transition-colors text-left">
+                  <Activity className="w-5 h-5" />
+                  <span className="font-medium text-sm">PCR Setup</span>
+                </button>
+                <button onClick={() => handleNewAction('timer')} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-700 dark:text-blue-400 transition-colors text-left">
+                  <Clock className="w-5 h-5" />
+                  <span className="font-medium text-sm">Quick Timer</span>
+                </button>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Nav Items */}
         <div className="flex flex-col gap-2 px-2">
-          <NavItem
-            icon={Home}
-            label="Home"
-            isActive={currentView === 'dashboard'}
-            onClick={() => onViewChange('dashboard')}
-            isCollapsed={isCollapsed}
-          />
-          <NavItem
-            icon={ClipboardList}
-            label="Protocols"
-            isActive={currentView === 'protocols'}
-            onClick={() => onViewChange('protocols')}
-            isCollapsed={isCollapsed}
-          />
-          <NavItem
-            icon={LineChart}
-            label="Growth"
-            isActive={currentView === 'calculator'}
-            onClick={() => onViewChange('calculator')}
-            isCollapsed={isCollapsed}
-          />
-          <NavItem
-            icon={Activity}
-            label="PCR"
-            isActive={currentView === 'pcr'}
-            onClick={() => onViewChange('pcr')}
-            isCollapsed={isCollapsed}
-          />
-          <NavItem
-            icon={Clock}
-            label="Timers"
-            isActive={currentView === 'timers'}
-            onClick={() => onViewChange('timers')}
-            isCollapsed={isCollapsed}
-          />
-          <NavItem
-            icon={Library}
-            label="Library"
-            isActive={currentView === 'experiments'}
-            onClick={() => onViewChange('experiments')}
-            isCollapsed={isCollapsed}
-          />
+          <NavItem icon={Home} label="Home" isActive={currentView === 'dashboard'} onClick={() => onViewChange('dashboard')} isCollapsed={isCollapsed} />
+          <NavItem icon={ClipboardList} label="Protocols" isActive={currentView === 'protocols'} onClick={() => onViewChange('protocols')} isCollapsed={isCollapsed} />
+          <NavItem icon={LineChart} label="Growth" isActive={currentView === 'calculator'} onClick={() => onViewChange('calculator')} isCollapsed={isCollapsed} />
+          <NavItem icon={Activity} label="PCR" isActive={currentView === 'pcr'} onClick={() => onViewChange('pcr')} isCollapsed={isCollapsed} />
+          <NavItem icon={Clock} label="Timers" isActive={currentView === 'timers'} onClick={() => onViewChange('timers')} isCollapsed={isCollapsed} />
+          <NavItem icon={Library} label="Library" isActive={currentView === 'experiments'} onClick={() => onViewChange('experiments')} isCollapsed={isCollapsed} />
         </div>
       </div>
 
-      {/* Settings at Bottom */}
-      <div className="px-2">
+      {/* Footer Actions: Theme & Settings */}
+      <div className="flex flex-col gap-2 px-2">
+        {/* Theme Toggle */}
+        <button
+          onClick={onToggleTheme}
+          className={`
+              flex items-center gap-3 w-full px-3 py-2.5 rounded-xl
+              transition-all duration-200 relative group
+              text-zinc-600 hover:bg-zinc-100 dark:hover:bg-white/5 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200
+              ${isCollapsed ? 'justify-center' : 'justify-start'}
+            `}
+          title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        >
+          {/* Visual circle for theme state */}
+          <div className={`w-5 h-5 rounded-full border-2 transition-colors ${isDarkMode ? 'border-zinc-400 bg-zinc-900' : 'border-zinc-600 bg-amber-300'
+            }`} />
+
+          <span className={`text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-300 ${isCollapsed ? 'w-0 opacity-0' : 'w-24 opacity-100 ml-3'}`}>
+            {isDarkMode ? 'Dark Mode' : 'Light Mode'}
+          </span>
+        </button>
+
         <NavItem
           icon={Settings}
           label="Settings"

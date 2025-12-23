@@ -203,6 +203,8 @@ const App: React.FC = () => {
         currentView={currentView}
         onViewChange={setCurrentView}
         onNewExperiment={handleAddExperiment}
+        isDarkMode={isDarkMode}
+        onToggleTheme={toggleTheme}
       />
 
       {/* Main Content Area */}
