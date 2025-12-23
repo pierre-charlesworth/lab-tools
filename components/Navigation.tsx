@@ -126,10 +126,10 @@ export const NavigationRail: React.FC<NavigationProps & { isDarkMode: boolean; o
         <button
           onClick={onToggleTheme}
           className={`
-              flex items-center gap-3 rounded-xl
+              flex items-center rounded-xl
               transition-all duration-200 relative group
               text-zinc-600 hover:bg-zinc-100 dark:hover:bg-white/5 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200
-              ${isCollapsed ? 'justify-center w-10 h-10 p-0 mx-auto' : 'justify-start w-full px-3 py-2.5'}
+              ${isCollapsed ? 'justify-center w-10 h-10 p-0 mx-auto gap-0' : 'justify-start w-full px-3 py-2.5 gap-3'}
             `}
           title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
         >
@@ -280,13 +280,13 @@ const NavItem: React.FC<{
   <button
     onClick={onClick}
     className={`
-      flex items-center gap-3 rounded-xl
+      flex items-center rounded-xl
       transition-all duration-200 relative group
       ${isActive
         ? 'bg-zinc-900 dark:bg-emerald-400 text-white dark:text-zinc-900'
         : 'text-zinc-600 hover:bg-zinc-100 dark:hover:bg-white/5 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
       }
-      ${isCollapsed ? 'justify-center w-10 h-10 p-0 mx-auto' : 'justify-start w-full px-3 py-2.5'}
+      ${isCollapsed ? 'justify-center w-10 h-10 p-0 mx-auto gap-0' : 'justify-start w-full px-3 py-2.5 gap-3'}
     `}
     title={isCollapsed ? label : undefined}
   >
