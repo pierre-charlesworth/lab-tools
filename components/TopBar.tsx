@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Experiment, StandaloneTimer } from '../types';
-import { FlaskConical, Plus } from 'lucide-react';
 import { MiniExperimentCard } from './MiniExperimentCard';
 import { MiniTimerCard } from './MiniTimerCard';
 
@@ -23,8 +22,8 @@ export const TopBar: React.FC<TopBarProps> = ({
   currentTime,
   isDarkMode,
   onSelectExperiment,
-  onToggleTheme,
-  onNewExperiment
+  onToggleTheme
+  // onNewExperiment removed - now handled by bottom nav Plus menu
 }) => {
   const hasActiveItems = runningExperiments.length > 0 || activeTimers.length > 0;
 
@@ -64,17 +63,7 @@ export const TopBar: React.FC<TopBarProps> = ({
           ))}
         </div>
 
-        {/* Right Controls */}
-        <div className="flex items-center gap-2 shrink-0 pl-2">
-          <button
-            onClick={onNewExperiment}
-            className="md:hidden flex items-center gap-1.5 px-3 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-full text-xs font-medium transition-all active:scale-95 border border-zinc-200 dark:border-zinc-700 h-9 sm:h-10"
-            aria-label="New Experiment"
-          >
-            <Plus className="w-4 h-4" />
-            <span className="hidden sm:inline">New</span>
-          </button>
-        </div>
+        {/* Right Controls - Mobile 'New' button removed (now in bottom nav Plus menu) */}
       </div>
     </header>
   );

@@ -1,5 +1,5 @@
-Task 9: Top Bar Refactor
-=========================
+Task 10: Mobile Navigation Uplift (Center Plus Design)
+========================================================
 
 STATUS: COMPLETED ✅
 
@@ -17,8 +17,8 @@ rendering chunks...
 computing gzip size...
 dist/index.html                   1.84 kB │ gzip:   0.84 kB
 dist/assets/index-*.css           4.36 kB │ gzip:   1.26 kB
-dist/assets/index-*.js          648.29 kB │ gzip: 190.71 kB
-✓ built in 4.38s
+dist/assets/index-*.js          650.46 kB │ gzip: 191.33 kB
+✓ built in 4.47s
 
 (!) Some chunks are larger than 500 kB after minification. Consider:
 - Using dynamic import() to code-split the application
@@ -32,108 +32,186 @@ Bundle Generation: ✅ PASSED
 
 Warnings:
 ---------
-⚠️ Chunk size > 500 KB (648.29 KB) - Pre-existing issue, not blocking
-Note: Bundle size slightly reduced (649.09 KB → 648.29 KB) due to removed components
+⚠️ Chunk size > 500 KB (650.46 KB) - Pre-existing issue, not blocking
+Note: Bundle size slightly increased (648.29 KB → 650.46 KB) due to new menu functionality
 
 Implementation Summary:
 -----------------------
-✅ Removed 'BioCalc' text and 'Laboratory' subtitle
-✅ Removed Theme Toggle button
-✅ Updated background to bg-white/60 dark:bg-black/60 (glassy/transparent)
-✅ Cleaned unused imports (Sun, Moon icons)
+✅ Updated BottomNavigation to 5-slot layout (Home, Protocols, Plus, Library, Settings)
+✅ Created center Plus button with -mt-8 negative margin "poke out" effect
+✅ Implemented cascading menu with 4 actions (Growth, PCR, Timer, Protocol)
+✅ Removed Growth and Timers tabs from bottom bar
+✅ Removed mobile 'New' button from TopBar
+✅ Added Dna icon import for PCR action
 ✅ Build verification passed
 
 Files Modified:
 ---------------
-1. components/TopBar.tsx (85 lines, reduced from 106 lines)
-   - Line 4: Removed unused imports (Sun, Moon)
-   - Line 32: Updated header background (more transparent)
-   - Lines 35-38: Removed text branding (13 lines deleted)
-   - Lines 70-80: Removed theme toggle button (7 lines deleted)
-   - Total: 21 lines removed, component simplified
+1. components/Navigation.tsx (268 lines, increased from 154 lines)
+   - Lines 1-3: Added useState import and Dna icon
+   - Lines 78-192: Rewrote BottomNavigation component
+   - Lines 106-142: Added cascading menu with overlay
+   - Lines 159-175: Created center Plus FAB button
+   - Lines 234-268: Added MenuButton component
+   - Total: 114 lines added (new functionality)
+
+2. components/TopBar.tsx (71 lines, reduced from 81 lines)
+   - Line 4: Removed unused imports (FlaskConical, Plus)
+   - Lines 18-27: Removed onNewExperiment from destructuring
+   - Lines 67-68: Removed mobile 'New' button
+   - Total: 10 lines removed
 
 Component Changes:
 ------------------
-TopBar.tsx - Header:
-  - Background: bg-white/95 dark:bg-lab-dark/95 → bg-white/60 dark:bg-black/60
-  - Removed supports-[backdrop-filter] conditional classes
-  - Result: 40% opacity (60/100) for glassy appearance
+Navigation.tsx - BottomNavigation:
+  - Layout: 5 equal tabs → 4 tabs + center FAB
+  - Removed: Growth tab, Timers tab
+  - Added: Settings tab, Center Plus button
+  - Styling: bg-white/dark:bg-lab-card → glass-panel
+  - Border: border-zinc-200 → border-[var(--md-outline-variant)]
 
-TopBar.tsx - Logo Section:
-  - Removed mobile text branding (BioCalc text)
-  - Removed desktop title section (BioCalc + Laboratory subtitle)
-  - Kept FlaskConical icon only
-  - Removed md:hidden class (logo now visible on all screens)
+Navigation.tsx - Center Plus Button:
+  - Size: 56x56px (w-14 h-14)
+  - Position: -mt-8 (pokes out above nav bar)
+  - Shape: Circular (rounded-full)
+  - Gradient: from-emerald-500 to-emerald-600
+  - Animation: Rotate 45° when open, scale 0.95 on press
+  - Shadow: shadow-lg for depth
 
-TopBar.tsx - Right Controls:
-  - Removed theme toggle button (Sun/Moon icon)
-  - Only "New Experiment" button remains
-  - Cleaner, minimal interface
+Navigation.tsx - Cascading Menu:
+  - 4 colored glassmorphic buttons
+  - Position: bottom-24 (above nav bar)
+  - Animations: Slide in from bottom, fade in
+  - Overlay: Dark backdrop with blur
+  - Actions:
+    1. Start Growth (emerald) → onNewExperiment()
+    2. Start PCR (purple) → Future PCR module
+    3. Quick Timer (blue) → Navigate to timers
+    4. New Protocol (indigo) → Navigate to protocols
 
-TopBar.tsx - Imports:
-  - Removed Sun icon (no longer needed)
-  - Removed Moon icon (no longer needed)
-  - Kept FlaskConical (logo)
-  - Kept Plus (new experiment button)
+Navigation.tsx - MenuButton Component:
+  - New component for menu actions
+  - Glassmorphism: glass-card with colored backgrounds
+  - Icon circle: White semi-transparent background
+  - Hover effects: Scale 1.05, enhanced shadow
+  - Min width: 200px for consistency
+
+TopBar.tsx - Removed Elements:
+  - Mobile 'New Experiment' button (entire right controls)
+  - FlaskConical and Plus icon imports
+  - onNewExperiment prop from destructuring
 
 Visual Impact:
 --------------
 Before:
-  - Full branding with 'BioCalc' text and 'Laboratory' subtitle
-  - Theme toggle button (sun/moon icon)
-  - Opaque background (95% opacity)
-  - More crowded top bar
+  - 5 equal tabs: Home | Protocols | Growth | Timers | Library
+  - Mobile 'New' button in top bar
+  - Standard flat bottom navigation
 
 After:
-  - Minimal: Just iconic FlaskConical logo
-  - No theme toggle
-  - Transparent/glassy background (60% opacity)
-  - Clean, modern, uncluttered top bar
-  - More space for mini experiment/timer cards
+  - 4 tabs + center FAB: Home | Protocols | [PLUS] | Library | Settings
+  - Center Plus button pokes out above nav bar
+  - Gradient emerald FAB with shadow
+  - No mobile 'New' button in top bar
+  - Glassmorphism bottom navigation
 
-Component Interface:
---------------------
-Props Still Used:
-  ✅ runningExperiments (for MiniExperimentCard display)
-  ✅ activeTimers (for MiniTimerCard display)
-  ✅ activeExperimentId (for highlighting active experiment)
-  ✅ currentTime (for timer/experiment time display)
-  ✅ onSelectExperiment (for experiment selection)
-  ✅ onNewExperiment (for new experiment button)
+Plus Button States:
+  Closed: Emerald gradient, white Plus icon, elevated
+  Open: Dark/light inverted, Plus rotated 45° (X), menu visible
 
-Props No Longer Used (but still in interface):
-  ⚠️ isDarkMode (still declared, not used in render)
-  ⚠️ onToggleTheme (still declared, not called)
+Cascading Menu:
+  - 4 colorful buttons stacked vertically
+  - Each with icon in semi-transparent circle
+  - Slide-in animation from bottom
+  - Backdrop blur overlay
 
-Note: Unused props maintained for backward compatibility
+Component Behavior:
+-------------------
+Navigation Flow:
+  - Home Tab → Dashboard view
+  - Protocols Tab → Protocols view
+  - Plus Button → Opens cascading menu
+  - Library Tab → Experiments/library view
+  - Settings Tab → Settings view
+
+Plus Menu Actions:
+  1. Start Growth → Calls onNewExperiment()
+  2. Start PCR → Placeholder (future module)
+  3. Quick Timer → Navigate to timers view
+  4. New Protocol → Navigate to protocols view
+
+State Management:
+  - isPlusMenuOpen (boolean): Controls menu visibility
+  - Menu Toggle: Click Plus button or overlay
+  - Menu Actions: Execute → Close menu
 
 Responsive Behavior:
 --------------------
-All Screen Sizes:
-  ✅ FlaskConical logo always visible
-  ✅ Glassy background (60% opacity)
-  ✅ Mini cards scrollable horizontally
+Desktop (md+):
+  ✅ Bottom navigation hidden (md:hidden)
+  ✅ NavigationRail visible (unchanged)
+  ✅ Plus menu not accessible (mobile-only)
 
-Mobile:
-  ✅ "New Experiment" button visible
-  ✅ Bottom navigation for primary navigation
+Mobile (< md):
+  ✅ Bottom navigation visible
+  ✅ 5-slot layout with center Plus FAB
+  ✅ Plus button pokes out above nav bar
+  ✅ Cascading menu accessible
+  ✅ Overlay darkens screen when menu open
 
-Desktop:
-  ✅ Navigation rail for primary navigation
-  ✅ "New Experiment" button hidden (md:hidden)
-  ✅ More space for mini cards
+Accessibility:
+--------------
+Plus Button:
+  ✅ Large touch target (56x56px)
+  ✅ Visual feedback on press (scale animation)
+  ✅ Clear open/closed states (rotation, color)
+
+Menu Buttons:
+  ✅ Minimum 200px width
+  ✅ Clear labels and icons
+  ✅ Color-coded actions
+  ✅ Hover and active states
+
+Overlay:
+  ✅ Dismissible by clicking anywhere
+  ✅ Provides focus on menu
+  ✅ Prevents accidental interactions
+
+Animations:
+-----------
+Plus Button:
+  - Rotate 45° on open (300ms)
+  - Scale 0.95 on press
+  - Color inversion on state change
+
+Cascading Menu:
+  - Fade in (duration-300)
+  - Slide in from bottom (slide-in-from-bottom-4)
+  - Menu buttons: hover scale 1.05, active scale 0.95
+
+Overlay:
+  - Fade in with menu
+  - Backdrop blur effect
 
 Type Safety:
 ------------
-✅ No new TypeScript issues introduced
-✅ All imports cleaned properly
-✅ All React patterns correct
+✅ No new TypeScript errors introduced
+✅ All imports properly typed
+✅ Component props correctly typed
 ✅ TypeScript compilation clean
 
-Task 9: COMPLETED ✅
+Task 10: COMPLETED ✅
 Tests: PASSED ✅
 Build: SUCCESSFUL ✅
 
-Total Changes: 4 sections modified, 21 lines removed
-Visual Result: Minimal, glassy top bar with iconic logo only
-Bundle Size: Slightly reduced (649.09 KB → 648.29 KB)
+Total Changes:
+- 114 lines of new functionality added
+- 10 lines removed (cleanup)
+- 2 tabs removed (Growth, Timers)
+- 1 tab added (Settings)
+- 1 new center Plus FAB button
+- 4 menu actions implemented
+- 1 new MenuButton component
+
+Visual Result: Modern FAB-style center Plus button with vibrant gradient, cascading menu with 4 colorful actions, glassmorphism navigation
+Bundle Size: Slightly increased (648.29 KB → 650.46 KB)
