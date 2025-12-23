@@ -32,10 +32,10 @@ export const NavigationRail: React.FC<NavigationProps & { isDarkMode: boolean; o
   };
 
   return (
-    <nav className={`hidden md:flex flex-col justify-between h-screen bg-white dark:bg-lab-card border-r border-zinc-200 dark:border-white/5 py-6 z-40 shrink-0 transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-64'}`}>
+    <nav className={`hidden md:flex flex-col justify-between h-screen bg-white dark:bg-lab-card border-r border-zinc-200 dark:border-white/5 py-6 z-40 shrink-0 transition-all duration-300 ${isCollapsed ? 'w-24' : 'w-64'}`}>
       <div className="flex flex-col gap-8">
         {/* Header with Logo and Toggle */}
-        <div className={`flex items-center px-4 ${isCollapsed ? 'justify-center' : 'justify-between'}`}>
+        <div className={`flex items-center ${isCollapsed ? 'justify-center gap-1 px-2' : 'justify-between px-4'}`}>
           <button
             onClick={() => onViewChange('dashboard')}
             className={`text-emerald-600 dark:text-emerald-500 hover:scale-110 transition-transform duration-200 flex items-center ${isCollapsed ? 'justify-center' : 'gap-3'}`}
@@ -47,31 +47,21 @@ export const NavigationRail: React.FC<NavigationProps & { isDarkMode: boolean; o
             </span>
           </button>
 
-          {/* Collapse Toggle Button - Only visible when expanded to avoid clutter in collapsed mode, OR position absolute? 
-              Actually user just wants square icons. Let's keep toggle but maybe adjust placement if needed. 
-              For now keeping functionality but ensuring layout handles 'w-20' correctly.
-          */}
+          {/* Collapse Toggle Button */}
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className={`w-8 h-8 rounded-lg hover:bg-zinc-100 dark:hover:bg-white/5 flex items-center justify-center transition-colors ${isCollapsed ? 'hidden' : 'flex'}`}
-            title="Collapse Sidebar"
+            className={`w-8 h-8 rounded-lg hover:bg-zinc-100 dark:hover:bg-white/5 flex items-center justify-center transition-colors`}
+            title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
           >
-            <ChevronLeft className="w-5 h-5 text-zinc-500 dark:text-zinc-400" />
+            {isCollapsed ? (
+              <ChevronRight className="w-5 h-5 text-zinc-500 dark:text-zinc-400" />
+            ) : (
+              <ChevronLeft className="w-5 h-5 text-zinc-500 dark:text-zinc-400" />
+            )}
           </button>
         </div>
 
-        {/* If collapsed, we need a way to expand. Put expand button at bottom or make logo clickable?
-           Common pattern: Collapse button is always visible. Let's fix the header layout above:
-        */}
-        {isCollapsed && (
-          <button
-            onClick={() => setIsCollapsed(false)}
-            className="self-center mt-[-20px] mb-4 w-6 h-6 rounded-full bg-zinc-100 dark:bg-white/10 flex items-center justify-center hover:scale-110 transition"
-            title="Expand"
-          >
-            <ChevronRight className="w-3 h-3 text-zinc-500 dark:text-zinc-400" />
-          </button>
-        )}
+
 
 
         {/* FAB - New (Cascade) */}
