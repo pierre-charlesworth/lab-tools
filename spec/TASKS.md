@@ -25,3 +25,4 @@
 
 | 14 | **Sidebar UX Polish**: "New" cascade menu (Desktop), Square icons (Collapsed), Bottom Theme Toggle. | Done | 13 |
 | 15 | **Animation & Tablet Polish**: Premium "pop" animations for cascades, default collapsed on tablet. | Done | 14 |
+| 16 | **PCR UI Refactor**: Single card Primer Analyst, Collapsible Cycler params, Protocol dropdown. | In Progress | 15 |

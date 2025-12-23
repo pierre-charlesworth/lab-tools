@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
-import { Play, Pause, RotateCcw, FlaskConical } from 'lucide-react';
+import { Play, Pause, RotateCcw, FlaskConical, ChevronDown, ChevronUp } from 'lucide-react';
 import { PCRProtocol, PCRStep } from '../../types/pcr';
 
 /**
@@ -30,6 +30,9 @@ export const VisualCycler: React.FC = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const animationRef = useRef<number>();
   const lastTimestampRef = useRef<number>();
+
+  // UI state
+  const [isParametersExpanded, setIsParametersExpanded] = useState(false);
 
   // Calculate time points and temperatures for the entire protocol
   const protocolData = useMemo(() => {
@@ -281,22 +284,42 @@ export const VisualCycler: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-4 sm:p-6 space-y-6">
-      {/* Header */}
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
-          <FlaskConical className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+    <div className="max-w-6xl mx-auto p-4 sm:p-6">
+      {/* Single Consolidated Card */}
+      <div className="glass-card rounded-2xl p-6 border border-[var(--md-outline-variant)] space-y-6">
+        {/* Header with Protocol Selector */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
+              <FlaskConical className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-[var(--md-on-surface)]">Thermocycler Visualizer</h1>
+              <p className="text-sm text-[var(--md-on-surface-variant)]">Visual PCR protocol editor & simulator</p>
+            </div>
+          </div>
         </div>
-        <div>
-          <h1 className="text-2xl font-bold text-[var(--md-on-surface)]">Thermocycler Visualizer</h1>
-          <p className="text-sm text-[var(--md-on-surface-variant)]">{protocol.name}</p>
-        </div>
-      </div>
 
-      {/* Graph */}
-      <div className="glass-card rounded-2xl p-6 border border-[var(--md-outline-variant)]">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="font-semibold text-[var(--md-on-surface)]">Temperature Profile</h3>
+        {/* Protocol Selector Dropdown */}
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-[var(--md-on-surface)]">
+            Protocol
+          </label>
+          <select
+            value={protocol.id}
+            className="w-full px-4 py-2 rounded-xl bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--md-on-surface)]"
+            disabled
+            title="Saved protocols from Library (Coming Soon)"
+          >
+            <option value={protocol.id}>{protocol.name}</option>
+          </select>
+          <p className="text-xs text-[var(--md-on-surface-variant)]">Saved protocols will be available once Library module is integrated</p>
+        </div>
+
+        {/* Graph Section */}
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <h3 className="font-semibold text-[var(--md-on-surface)]">Temperature Profile</h3>
           <div className="flex items-center gap-4">
             <div className="text-xs font-mono text-[var(--md-on-surface-variant)] bg-[var(--md-surface-container)] px-3 py-1.5 rounded-lg">
               {formatTime(currentTime)} / {formatTime(protocolData.totalTime)}
@@ -439,40 +462,53 @@ export const VisualCycler: React.FC = () => {
           </div>
         </div>
 
-        {/* Playback controls */}
-        <div className="flex items-center justify-center gap-3 mt-6">
+          {/* Playback controls */}
+          <div className="flex items-center justify-center gap-3 mt-6">
+            <button
+              onClick={() => setIsPlaying(!isPlaying)}
+              className="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-medium flex items-center gap-2 transition-colors"
+            >
+              {isPlaying ? (
+                <>
+                  <Pause className="w-4 h-4" />
+                  Pause
+                </>
+              ) : (
+                <>
+                  <Play className="w-4 h-4" />
+                  Start
+                </>
+              )}
+            </button>
+            <button
+              onClick={() => {
+                setCurrentTime(0);
+                setIsPlaying(false);
+              }}
+              className="px-6 py-2.5 bg-[var(--md-surface-container)] hover:bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] rounded-xl font-medium flex items-center gap-2 transition-colors border border-[var(--md-outline-variant)]"
+            >
+              <RotateCcw className="w-4 h-4" />
+              Reset
+            </button>
+          </div>
+        </div>
+
+        {/* Collapsible Protocol Parameters Section */}
+        <div className="border-t border-[var(--md-outline-variant)] pt-6">
           <button
-            onClick={() => setIsPlaying(!isPlaying)}
-            className="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-medium flex items-center gap-2 transition-colors"
+            onClick={() => setIsParametersExpanded(!isParametersExpanded)}
+            className="w-full flex items-center justify-between p-4 rounded-xl bg-[var(--md-surface-container)] hover:bg-[var(--md-surface-container-high)] transition-colors border border-[var(--md-outline-variant)]"
           >
-            {isPlaying ? (
-              <>
-                <Pause className="w-4 h-4" />
-                Pause
-              </>
+            <h3 className="font-semibold text-[var(--md-on-surface)]">Protocol Parameters</h3>
+            {isParametersExpanded ? (
+              <ChevronUp className="w-5 h-5 text-[var(--md-on-surface-variant)]" />
             ) : (
-              <>
-                <Play className="w-4 h-4" />
-                Start
-              </>
+              <ChevronDown className="w-5 h-5 text-[var(--md-on-surface-variant)]" />
             )}
           </button>
-          <button
-            onClick={() => {
-              setCurrentTime(0);
-              setIsPlaying(false);
-            }}
-            className="px-6 py-2.5 bg-[var(--md-surface-container)] hover:bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] rounded-xl font-medium flex items-center gap-2 transition-colors border border-[var(--md-outline-variant)]"
-          >
-            <RotateCcw className="w-4 h-4" />
-            Reset
-          </button>
-        </div>
-      </div>
 
-      {/* Protocol Editor */}
-      <div className="glass-card rounded-2xl p-6 border border-[var(--md-outline-variant)] space-y-6">
-        <h3 className="font-semibold text-[var(--md-on-surface)] mb-4">Protocol Parameters</h3>
+          {isParametersExpanded && (
+            <div className="mt-4 space-y-6">{/* Protocol Parameters Content */}
 
         <div className="grid md:grid-cols-2 gap-6">
           {/* Initial Denaturation */}
@@ -654,12 +690,15 @@ export const VisualCycler: React.FC = () => {
           </div>
         </div>
 
-        {/* Protocol info */}
-        <div className="mt-6 p-3 bg-[var(--md-surface-container)] rounded-xl border border-[var(--md-outline-variant)]">
-          <div className="text-xs text-[var(--md-on-surface-variant)] space-y-1">
-            <p><span className="font-semibold">Total Time:</span> {formatTime(protocolData.totalTime)}</p>
-            <p><span className="font-semibold">Ramp Rate:</span> {protocol.rampRate}°C/sec</p>
-          </div>
+              {/* Protocol info */}
+              <div className="mt-6 p-3 bg-[var(--md-surface-container)] rounded-xl border border-[var(--md-outline-variant)]">
+                <div className="text-xs text-[var(--md-on-surface-variant)] space-y-1">
+                  <p><span className="font-semibold">Total Time:</span> {formatTime(protocolData.totalTime)}</p>
+                  <p><span className="font-semibold">Ramp Rate:</span> {protocol.rampRate}°C/sec</p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

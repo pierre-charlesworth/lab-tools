@@ -83,25 +83,47 @@ export const PrimerAnalyst: React.FC = () => {
 
   return (
     <div className="max-w-5xl mx-auto p-4 sm:p-6 space-y-6">
-      {/* Header */}
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
-          <Dna className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-        </div>
-        <div>
-          <h1 className="text-2xl font-bold text-[var(--md-on-surface)]">Primer Analyst</h1>
-          <p className="text-sm text-[var(--md-on-surface-variant)]">Real-time Tm calculation & primer pair validation</p>
-        </div>
-      </div>
-
-      {/* Input Section */}
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Forward Primer */}
-        <div className="glass-card rounded-2xl p-6 border border-[var(--md-outline-variant)] space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="font-semibold text-[var(--md-on-surface)]">Forward Primer</h3>
-            <span className="text-xs uppercase tracking-wider text-purple-600 dark:text-purple-400 font-bold">5' → 3'</span>
+      {/* Single Consolidated Card */}
+      <div className="glass-card rounded-2xl p-6 border border-[var(--md-outline-variant)] space-y-6">
+        {/* Header Inside Card */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
+              <Dna className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-[var(--md-on-surface)]">Primer Analyst</h1>
+              <p className="text-sm text-[var(--md-on-surface-variant)]">Real-time Tm calculation & primer pair validation</p>
+            </div>
           </div>
+
+          {/* Save/Recall Buttons (Placeholder) */}
+          <div className="flex items-center gap-2">
+            <button
+              className="px-4 py-2 rounded-xl bg-[var(--md-surface-container)] hover:bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] text-sm font-medium transition-colors border border-[var(--md-outline-variant)] opacity-50 cursor-not-allowed"
+              disabled
+              title="Save to Library (Coming Soon)"
+            >
+              Save
+            </button>
+            <button
+              className="px-4 py-2 rounded-xl bg-[var(--md-surface-container)] hover:bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] text-sm font-medium transition-colors border border-[var(--md-outline-variant)] opacity-50 cursor-not-allowed"
+              disabled
+              title="Load from Library (Coming Soon)"
+            >
+              Recall
+            </button>
+          </div>
+        </div>
+
+        {/* Input Section */}
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Forward Primer */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-semibold text-[var(--md-on-surface)]">Forward Primer</h3>
+              <span className="text-xs uppercase tracking-wider text-purple-600 dark:text-purple-400 font-bold">5' → 3'</span>
+            </div>
 
           <textarea
             value={forwardPrimer}
@@ -164,12 +186,12 @@ export const PrimerAnalyst: React.FC = () => {
           )}
         </div>
 
-        {/* Reverse Primer */}
-        <div className="glass-card rounded-2xl p-6 border border-[var(--md-outline-variant)] space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="font-semibold text-[var(--md-on-surface)]">Reverse Primer</h3>
-            <span className="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-bold">5' → 3'</span>
-          </div>
+          {/* Reverse Primer */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-semibold text-[var(--md-on-surface)]">Reverse Primer</h3>
+              <span className="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-bold">5' → 3'</span>
+            </div>
 
           <textarea
             value={reversePrimer}
@@ -230,12 +252,12 @@ export const PrimerAnalyst: React.FC = () => {
               )}
             </div>
           )}
+          </div>
         </div>
-      </div>
 
-      {/* Primer Pair Analysis */}
-      {pairStatus && fwdTm?.isValid && revTm?.isValid && (
-        <div className={`glass-card rounded-2xl p-6 border ${getStatusBg(pairStatus.status)}`}>
+        {/* Primer Pair Analysis */}
+        {pairStatus && fwdTm?.isValid && revTm?.isValid && (
+          <div className={`p-6 rounded-xl border ${getStatusBg(pairStatus.status)}`}>
           <div className="flex items-start gap-3">
             <div className={getStatusColor(pairStatus.status)}>
               {getStatusIcon(pairStatus.status)}
@@ -262,19 +284,20 @@ export const PrimerAnalyst: React.FC = () => {
                 </div>
               </div>
             </div>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Info Card */}
-      <div className="glass-panel rounded-xl p-4 border border-[var(--md-outline-variant)]">
-        <h4 className="text-xs uppercase tracking-wider text-[var(--md-on-surface-variant)] font-bold mb-3">Calculation Method</h4>
-        <div className="text-xs text-[var(--md-on-surface-variant)] space-y-1">
-          <p>• <span className="font-semibold text-[var(--md-on-surface)]">Tm Calculation:</span> Nearest-Neighbor method (SantaLucia 1998)</p>
-          <p>• <span className="font-semibold text-[var(--md-on-surface)]">Salt Concentration:</span> 50 mM (standard PCR conditions)</p>
-          <p>• <span className="font-semibold text-[var(--md-on-surface)]">Primer Concentration:</span> 250 nM</p>
-          <p>• <span className="font-semibold text-[var(--md-on-surface)]">Optimal GC Content:</span> 40-60%</p>
-          <p>• <span className="font-semibold text-[var(--md-on-surface)]">Optimal Tm Difference:</span> ≤ 5°C</p>
+        {/* Info Section */}
+        <div className="p-4 rounded-xl bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)]">
+          <h4 className="text-xs uppercase tracking-wider text-[var(--md-on-surface-variant)] font-bold mb-3">Calculation Method</h4>
+          <div className="text-xs text-[var(--md-on-surface-variant)] space-y-1">
+            <p>• <span className="font-semibold text-[var(--md-on-surface)]">Tm Calculation:</span> Nearest-Neighbor method (SantaLucia 1998)</p>
+            <p>• <span className="font-semibold text-[var(--md-on-surface)]">Salt Concentration:</span> 50 mM (standard PCR conditions)</p>
+            <p>• <span className="font-semibold text-[var(--md-on-surface)]">Primer Concentration:</span> 250 nM</p>
+            <p>• <span className="font-semibold text-[var(--md-on-surface)]">Optimal GC Content:</span> 40-60%</p>
+            <p>• <span className="font-semibold text-[var(--md-on-surface)]">Optimal Tm Difference:</span> ≤ 5°C</p>
+          </div>
         </div>
       </div>
     </div>

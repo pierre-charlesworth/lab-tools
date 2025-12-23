@@ -1,6 +1,10 @@
 {
-    "task_id": null,
-    "task_description": "No active task. Waiting for user input.",
-    "files_to_edit": [],
-    "task_type": "idle"
+    "task_id": "16",
+    "task_description": "Refactor PCR Module UI based on implementation_plan_pcr_ux.md. 1) Primer Analyst: Consolidate into single card. 2) Visual Cycler: Protocol dropdown, Collapsible parameters at bottom, Cleaner header.",
+    "files_to_edit": [
+        "components/pcr/PrimerAnalyst.tsx",
+        "components/pcr/VisualCycler.tsx",
+        "components/PCRView.tsx"
+    ],
+    "task_type": "refactor"
 }
