@@ -15,3 +15,6 @@
 | 9 | **Top Bar Refactor**: Remove logo text and theme button. Make background more glassy. | Done | 2 |
 | 9b | **Top Bar Refinement**: Remove logo icon. Left-align mini timers on mobile with horizontal scroll. | Done | 9 |
 | 10 | **Mobile Navigation Uplift**: Implement "Plus" FAB with cascading action menu for Timers/Experiments. Remove TopBar "New" button. | Done | 2 |
+| 10b | **Top Bar Material Fix**: Match Top Bar glass effect to Bottom Nav (translucent blur). | In Progress | 10 |
+
+| 11 | **Library Module - Core**: Implement "Save to Library" for Growth/Timers and "Recall" functionality. | Future | 2,7 |

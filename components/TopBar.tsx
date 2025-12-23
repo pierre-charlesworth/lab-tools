@@ -28,7 +28,7 @@ export const TopBar: React.FC<TopBarProps> = ({
   const hasActiveItems = runningExperiments.length > 0 || activeTimers.length > 0;
 
   return (
-    <header className="sticky top-0 z-30 bg-white/60 dark:bg-black/60 backdrop-blur-xl border-b border-zinc-200 dark:border-white/10 transition-colors duration-300 shadow-sm">
+    <header className="sticky top-0 z-30 glass-panel border-b border-[var(--md-outline-variant)] transition-colors duration-300 shadow-sm">
       <div className="w-full px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-4">
 
 
