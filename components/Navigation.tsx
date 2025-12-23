@@ -23,7 +23,9 @@ export const NavigationRail: React.FC<NavigationProps> = ({ currentView, onViewC
             title="BioCalc Home"
           >
             <FlaskConical className="w-8 h-8 shrink-0" />
-            {!isCollapsed && <span className="text-xl font-bold text-zinc-900 dark:text-zinc-100">BioCalc</span>}
+            <span className={`text-xl font-bold text-zinc-900 dark:text-zinc-100 whitespace-nowrap overflow-hidden transition-all duration-300 ${isCollapsed ? 'w-0 opacity-0' : 'w-24 opacity-100 ml-3'}`}>
+              BioCalc
+            </span>
           </button>
 
           {/* Collapse Toggle Button */}
@@ -48,7 +50,9 @@ export const NavigationRail: React.FC<NavigationProps> = ({ currentView, onViewC
             title="New Experiment"
           >
             <Plus className="w-6 h-6 group-hover:rotate-90 transition-transform duration-300 shrink-0" />
-            {!isCollapsed && <span className="font-medium">New Experiment</span>}
+            <span className={`font-medium whitespace-nowrap overflow-hidden transition-all duration-300 ${isCollapsed ? 'w-0 opacity-0' : 'w-32 opacity-100 ml-2'}`}>
+              New Experiment
+            </span>
           </button>
         </div>
 
@@ -249,12 +253,12 @@ const NavItem: React.FC<{
     `}
     title={isCollapsed ? label : undefined}
   >
-    <Icon className={`w-5 h-5 shrink-0 ${isActive ? 'stroke-[2.5px]' : 'stroke-2'}`} />
-    {!isCollapsed && (
-      <span className={`text-sm font-medium whitespace-nowrap ${isActive ? '' : ''}`}>
-        {label}
-      </span>
-    )}
+    <Icon className={`w-5 h-5 shrink-0 transition-all duration-300 ${isActive ? 'stroke-[2.5px]' : 'stroke-2'}`} />
+
+    <span className={`text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-300 ${isCollapsed ? 'w-0 opacity-0' : 'w-24 opacity-100 ml-3'
+      }`}>
+      {label}
+    </span>
   </button>
 );
 
