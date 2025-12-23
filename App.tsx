@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Sidebar } from './components/Sidebar';
-import { BottomNavigation } from './components/Navigation';
+import { NavigationRail, BottomNavigation } from './components/Navigation';
 import { TopBar } from './components/TopBar';
 import { CalculatorView } from './components/CalculatorView';
 import { TimerView } from './components/TimerView';
@@ -80,7 +79,7 @@ const defaultProtocols: Protocol[] = [
 const PlaceholderView: React.FC<{ title: string, icon: React.ElementType }> = ({ title, icon: Icon }) => (
   <div className="flex flex-col items-center justify-center h-full text-zinc-400 dark:text-zinc-600 p-8 text-center animate-in fade-in zoom-in duration-300">
     <div className="bg-zinc-100 dark:bg-white/5 p-6 rounded-full mb-6">
-       <Icon className="w-12 h-12 opacity-50" />
+      <Icon className="w-12 h-12 opacity-50" />
     </div>
     <h2 className="text-2xl font-serif italic mb-2 text-zinc-900 dark:text-zinc-100">{title}</h2>
     <p className="max-w-xs text-sm">This module is currently under development. Check back later for updates.</p>
@@ -91,12 +90,12 @@ const App: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [currentView, setCurrentView] = useState<View>('dashboard');
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
-  
+
   // Data State
   const [experiments, setExperiments] = useState<Experiment[]>([createNewExperiment(0)]);
   const [timers, setTimers] = useState<StandaloneTimer[]>([]);
   const [protocols, setProtocols] = useState<Protocol[]>(defaultProtocols);
-  
+
   const [activeExperimentId, setActiveExperimentId] = useState<string>(experiments[0].id);
   const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -110,12 +109,12 @@ const App: React.FC = () => {
         let updated = false;
         const nextTimers = prev.map(t => {
           if (t.status === 'running' && t.startTime) {
-             const endTime = t.startTime + (t.durationMinutes * 60000);
-             if (now.getTime() >= endTime) {
-               updated = true;
-               // Reset to idle (unscheduled) when duration completes
-               return { ...t, status: 'idle', startTime: null, pausedTimeRemaining: null } as StandaloneTimer;
-             }
+            const endTime = t.startTime + (t.durationMinutes * 60000);
+            if (now.getTime() >= endTime) {
+              updated = true;
+              // Reset to idle (unscheduled) when duration completes
+              return { ...t, status: 'idle', startTime: null, pausedTimeRemaining: null } as StandaloneTimer;
+            }
           }
           return t;
         });
@@ -143,11 +142,11 @@ const App: React.FC = () => {
     const newExp = { ...baseExp, ...overrides, id: baseExp.id, createdAt: Date.now() };
     setExperiments(prev => [...prev, newExp]);
     setActiveExperimentId(newExp.id);
-    setCurrentView('calculator'); 
+    setCurrentView('calculator');
   };
 
   const updateActiveExperiment = (updates: Partial<Experiment>) => {
-    setExperiments(prev => prev.map(exp => 
+    setExperiments(prev => prev.map(exp =>
       exp.id === activeExperimentId ? { ...exp, ...updates } : exp
     ));
   };
@@ -200,19 +199,18 @@ const App: React.FC = () => {
     <div className="flex h-screen w-full premium-bg font-sans text-[var(--md-on-background)] selection:bg-teal-500/30 selection:text-teal-800 dark:selection:text-teal-200 transition-colors duration-300 overflow-hidden">
 
       {/* Desktop Sidebar with Glassmorphism */}
-      <Sidebar
+      <NavigationRail
         currentView={currentView}
         onViewChange={setCurrentView}
-        isDarkMode={isDarkMode}
-        onToggleTheme={toggleTheme}
+        onNewExperiment={handleAddExperiment}
       />
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
-        
+
         {/* Top Bar (Context-aware: Hidden on Dashboard) */}
         {currentView !== 'dashboard' && (
-          <TopBar 
+          <TopBar
             runningExperiments={runningExperiments}
             activeTimers={activeTimers}
             activeExperimentId={activeExperimentId}
@@ -229,9 +227,9 @@ const App: React.FC = () => {
 
         {/* Scrollable View Area */}
         <main className="flex-1 overflow-y-auto overflow-x-hidden scroll-smooth">
-          
+
           {currentView === 'dashboard' && (
-            <DashboardView 
+            <DashboardView
               activeTimers={activeTimers}
               experiments={experiments}
               onNavigate={setCurrentView}
@@ -247,7 +245,7 @@ const App: React.FC = () => {
           )}
 
           {currentView === 'calculator' && (
-            <CalculatorView 
+            <CalculatorView
               key={activeExperiment.id}
               experiment={activeExperiment}
               onUpdate={updateActiveExperiment}
@@ -257,7 +255,7 @@ const App: React.FC = () => {
           )}
 
           {currentView === 'timers' && (
-            <TimerView 
+            <TimerView
               timers={timers}
               experiments={experiments}
               onAddTimer={handleAddTimer}
@@ -268,28 +266,28 @@ const App: React.FC = () => {
           )}
 
           {currentView === 'protocols' && (
-             <ProtocolView 
-               protocols={protocols}
-               timers={timers}
-               currentTime={currentTime}
-               onAddTimer={handleAddTimer}
-               onNewExperiment={handleAddExperiment}
-               onDeleteProtocol={deleteProtocol}
-               onUpdateProtocol={updateProtocol}
-               onOpenAIModal={() => setIsAIModalOpen(true)}
-             />
+            <ProtocolView
+              protocols={protocols}
+              timers={timers}
+              currentTime={currentTime}
+              onAddTimer={handleAddTimer}
+              onNewExperiment={handleAddExperiment}
+              onDeleteProtocol={deleteProtocol}
+              onUpdateProtocol={updateProtocol}
+              onOpenAIModal={() => setIsAIModalOpen(true)}
+            />
           )}
-          
+
           {currentView === 'experiments' && (
-             <PlaceholderView title="Experiment Library" icon={Construction} />
+            <PlaceholderView title="Experiment Library" icon={Construction} />
           )}
 
           {currentView === 'pcr' && (
-             <PCRView />
+            <PCRView />
           )}
 
           {currentView === 'settings' && (
-             <PlaceholderView title="Settings" icon={Construction} />
+            <PlaceholderView title="Settings" icon={Construction} />
           )}
 
           {/* Footer inside scroll area (only if not dashboard, as dashboard has own layout structure) */}
@@ -301,16 +299,16 @@ const App: React.FC = () => {
             </footer>
           )}
         </main>
-        
+
         {/* Mobile Bottom Navigation */}
-        <BottomNavigation 
-          currentView={currentView} 
+        <BottomNavigation
+          currentView={currentView}
           onViewChange={setCurrentView}
           onNewExperiment={() => handleAddExperiment()}
         />
 
         {/* Global AI Modal */}
-        <AIProtocolModal 
+        <AIProtocolModal
           isOpen={isAIModalOpen}
           onClose={() => setIsAIModalOpen(false)}
           onCreateExperiment={handleAddExperiment}
