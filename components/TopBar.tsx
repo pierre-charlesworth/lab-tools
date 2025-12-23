@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Experiment, StandaloneTimer } from '../types';
-import { Sun, Moon, FlaskConical, Plus } from 'lucide-react';
+import { FlaskConical, Plus } from 'lucide-react';
 import { MiniExperimentCard } from './MiniExperimentCard';
 import { MiniTimerCard } from './MiniTimerCard';
 
@@ -29,25 +29,12 @@ export const TopBar: React.FC<TopBarProps> = ({
   const hasActiveItems = runningExperiments.length > 0 || activeTimers.length > 0;
 
   return (
-    <header className="sticky top-0 z-30 bg-white/95 dark:bg-lab-dark/95 backdrop-blur-xl border-b border-zinc-200 dark:border-white/10 transition-colors duration-300 shadow-sm supports-[backdrop-filter]:bg-white/60 supports-[backdrop-filter]:dark:bg-lab-dark/60">
+    <header className="sticky top-0 z-30 bg-white/60 dark:bg-black/60 backdrop-blur-xl border-b border-zinc-200 dark:border-white/10 transition-colors duration-300 shadow-sm">
       <div className="w-full px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-4">
         
         {/* Logo Section */}
-        <div className="flex items-baseline gap-3 shrink-0 md:hidden">
+        <div className="flex items-baseline gap-3 shrink-0">
            <FlaskConical className="w-6 h-6 text-emerald-600 dark:text-emerald-500" />
-           <span className="text-lg font-serif italic font-medium text-zinc-900 dark:text-white tracking-wide">
-              BioCalc
-            </span>
-        </div>
-
-        {/* Desktop Title */}
-        <div className="hidden md:flex flex-col shrink-0">
-             <span className="text-xl font-serif italic font-medium text-zinc-900 dark:text-white tracking-wide">
-                BioCalc
-              </span>
-             <span className="text-[10px] font-sans tracking-[0.2em] text-zinc-500 uppercase">
-                Laboratory
-             </span>
         </div>
 
         {/* Combined Mini Timers Area */}
@@ -89,14 +76,6 @@ export const TopBar: React.FC<TopBarProps> = ({
           >
             <Plus className="w-4 h-4" />
             <span className="hidden sm:inline">New</span>
-          </button>
-
-          <button 
-            onClick={onToggleTheme}
-            className="p-2 sm:p-2.5 rounded-full text-zinc-500 hover:bg-zinc-100 dark:hover:bg-white/10 transition-colors active:scale-90"
-            aria-label="Toggle theme"
-          >
-            {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
         </div>
       </div>

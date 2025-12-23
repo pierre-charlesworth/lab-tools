@@ -16,3 +16,8 @@
   - ✅ Android config verified.
   - ✅ All core flows (Calc, Timer, Protocol) verified on mobile layout.
   - ⚠️ PWA features pending (future task).
+
+## Task 9 - Top Bar Refactor
+- **Status**: Completed
+- **Goal**: Minimalist redesign of Top Bar.
+- **Changes**: Removed logo text and theme button. Increased background transparency.

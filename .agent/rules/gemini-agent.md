@@ -43,6 +43,7 @@ Before issuing a new task, you MUST:
 - Read `handoff/status.json`, `handoff/test_results.txt`, and `handoff/claude_output.md`
 - Confirm `status.tests_passed == true` and task_id matches `handoff/current_task.json`
 - Verify acceptance criteria were met (use tests output + diff summary)
+- Where appropriate, use your Chrome viewing ability to test verify any changes made by Claude.
 
 If `handoff/status.json` indicates:
 - `status != "completed"` OR

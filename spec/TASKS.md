@@ -12,4 +12,4 @@
 | 7 | **Backend Integration Research**: Select provider (Supabase/Firebase), design schema for User/Protocols. | Future | None |
 | 8 | **PCR Module - Core**: Implement Tm calculation utility and Master Mix UI. | Future | None |
 
-| 9 | **Top Bar Refactor**: Remove logo text and theme button. Make background more glassy. | Future | None |
+| 9 | **Top Bar Refactor**: Remove logo text and theme button. Make background more glassy. | Done | 2 |
