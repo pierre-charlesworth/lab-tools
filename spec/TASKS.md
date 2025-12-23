@@ -24,3 +24,4 @@
 | 13 | **PCR Refinements**: Compact Primer inputs, multi-kit Master Mix dropdown, real-time scrolling Cycler graph. | Done | 10 |
 
 | 14 | **Sidebar UX Polish**: "New" cascade menu (Desktop), Square icons (Collapsed), Bottom Theme Toggle. | Done | 13 |
+| 15 | **Animation & Tablet Polish**: Premium "pop" animations for cascades, default collapsed on tablet. | In Progress | 14 |

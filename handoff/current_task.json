@@ -1,6 +1,9 @@
 {
-    "task_id": null,
-    "task_description": "No active task. Waiting for user input.",
-    "files_to_edit": [],
-    "task_type": "idle"
+    "task_id": "15",
+    "task_description": "Animation & Tablet Polish: Implement premium menu animations and default collapsed sidebar on tablet.",
+    "files_to_edit": [
+        "components/Navigation.tsx",
+        "index.css"
+    ],
+    "task_type": "feature"
 }

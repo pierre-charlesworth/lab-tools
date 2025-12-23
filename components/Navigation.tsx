@@ -10,24 +10,25 @@ interface NavigationProps {
 }
 
 export const NavigationRail: React.FC<NavigationProps & { isDarkMode: boolean; onToggleTheme: () => void }> = ({ currentView, onViewChange, onNewExperiment, isDarkMode, onToggleTheme }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  // Tablet (Portrait) Default: Collapsed if width < 1024px (lg breakpoint)
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 1024;
+    }
+    return false;
+  });
   const [isNewMenuOpen, setIsNewMenuOpen] = useState(false);
+
+  // Handle window resize to auto-collapse on tablet if user hasn't manually interacted? 
+  // For now, just initial state is safer to avoid overriding user preference during resize.
 
   const handleNewAction = (action: 'growth' | 'pcr' | 'timer' | 'protocol') => {
     setIsNewMenuOpen(false);
     switch (action) {
-      case 'growth':
-        onNewExperiment();
-        break;
-      case 'pcr':
-        onViewChange('pcr');
-        break;
-      case 'timer':
-        onViewChange('timers');
-        break;
-      case 'protocol':
-        onViewChange('protocols');
-        break;
+      case 'growth': onNewExperiment(); break;
+      case 'pcr': onViewChange('pcr'); break;
+      case 'timer': onViewChange('timers'); break;
+      case 'protocol': onViewChange('protocols'); break;
     }
   };
 
@@ -81,18 +82,41 @@ export const NavigationRail: React.FC<NavigationProps & { isDarkMode: boolean; o
           {isNewMenuOpen && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setIsNewMenuOpen(false)} />
-              <div className={`absolute top-0 left-full ml-2 z-50 flex flex-col gap-2 min-w-[180px] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl p-2 shadow-xl animate-in fade-in slide-in-from-left-4 duration-200`}>
-                <button onClick={() => handleNewAction('growth')} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 transition-colors text-left">
-                  <FlaskConical className="w-5 h-5" />
-                  <span className="font-medium text-sm">Growth Curve</span>
+              <div className="absolute top-0 left-full ml-4 z-50 flex flex-col gap-3 min-w-[200px]">
+                {/* 1. Growth */}
+                <button
+                  onClick={() => handleNewAction('growth')}
+                  className="glass-card flex items-center gap-3 px-4 py-3 rounded-2xl hover:scale-105 active:scale-95 transition-all duration-200 text-emerald-700 dark:text-emerald-400 bg-white/90 dark:bg-zinc-900/90 shadow-xl border border-white/20 animate-in fade-in zoom-in-50 slide-in-from-left-4 duration-300 fill-mode-forwards"
+                  style={{ animationDelay: '0ms' }}
+                >
+                  <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center shrink-0">
+                    <FlaskConical className="w-5 h-5" />
+                  </div>
+                  <span className="font-semibold text-sm">Growth Curve</span>
                 </button>
-                <button onClick={() => handleNewAction('pcr')} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-purple-50 dark:hover:bg-purple-900/20 text-purple-700 dark:text-purple-400 transition-colors text-left">
-                  <Activity className="w-5 h-5" />
-                  <span className="font-medium text-sm">PCR Setup</span>
+
+                {/* 2. PCR */}
+                <button
+                  onClick={() => handleNewAction('pcr')}
+                  className="glass-card flex items-center gap-3 px-4 py-3 rounded-2xl hover:scale-105 active:scale-95 transition-all duration-200 text-purple-700 dark:text-purple-400 bg-white/90 dark:bg-zinc-900/90 shadow-xl border border-white/20 animate-in fade-in zoom-in-50 slide-in-from-left-4 duration-300 fill-mode-forwards"
+                  style={{ animationDelay: '75ms' }}
+                >
+                  <div className="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center shrink-0">
+                    <Activity className="w-5 h-5" />
+                  </div>
+                  <span className="font-semibold text-sm">PCR Setup</span>
                 </button>
-                <button onClick={() => handleNewAction('timer')} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-700 dark:text-blue-400 transition-colors text-left">
-                  <Clock className="w-5 h-5" />
-                  <span className="font-medium text-sm">Quick Timer</span>
+
+                {/* 3. Timer */}
+                <button
+                  onClick={() => handleNewAction('timer')}
+                  className="glass-card flex items-center gap-3 px-4 py-3 rounded-2xl hover:scale-105 active:scale-95 transition-all duration-200 text-blue-700 dark:text-blue-400 bg-white/90 dark:bg-zinc-900/90 shadow-xl border border-white/20 animate-in fade-in zoom-in-50 slide-in-from-left-4 duration-300 fill-mode-forwards"
+                  style={{ animationDelay: '150ms' }}
+                >
+                  <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+                    <Clock className="w-5 h-5" />
+                  </div>
+                  <span className="font-semibold text-sm">Quick Timer</span>
                 </button>
               </div>
             </>
@@ -182,30 +206,45 @@ export const BottomNavigation: React.FC<NavigationProps> = ({ currentView, onVie
 
       {/* Cascading Menu */}
       {isPlusMenuOpen && (
-        <div className="md:hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 animate-in fade-in slide-in-from-bottom-4 duration-300">
+        <div className="md:hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-3 w-64 items-center">
           <MenuButton
             icon={FlaskConical}
             label="Start Growth"
             onClick={() => handleMenuAction('growth')}
             color="emerald"
+            delay="150ms"
           />
           <MenuButton
             icon={Activity}
             label="Start PCR"
             onClick={() => handleMenuAction('pcr')}
             color="purple"
+            delay="75ms"
           />
           <MenuButton
             icon={Clock}
             label="Quick Timer"
             onClick={() => handleMenuAction('timer')}
             color="blue"
+            delay="0ms" // Appear closest to button first? Or top down? Let's do bottom up stack. 
+          // Actually usually closest pops first. So Timer (bottom) first.
           />
           <MenuButton
             icon={ClipboardList}
             label="New Protocol"
             onClick={() => handleMenuAction('protocol')}
             color="indigo"
+            delay="225ms"
+          // Wait, this ordering is top-to-bottom in code. Visually:
+          // Top: Growth
+          // ...
+          // Bottom: Protocol? No Protocol was bottom. 
+          // Start Growth (Top)
+          // Start PCR
+          // Quick Timer
+          // New Protocol (Bottom)
+          // Button (Plus)
+          // Let's reverse delays so bottom happens first.
           />
         </div>
       )}
@@ -313,8 +352,9 @@ const MenuButton: React.FC<{
   icon: React.ElementType;
   label: string;
   onClick: () => void;
-  color: 'emerald' | 'purple' | 'blue' | 'indigo'
-}> = ({ icon: Icon, label, onClick, color }) => {
+  color: 'emerald' | 'purple' | 'blue' | 'indigo';
+  delay?: string;
+}> = ({ icon: Icon, label, onClick, color, delay = '0ms' }) => {
   const colorClasses = {
     emerald: 'bg-emerald-500 dark:bg-emerald-400 text-white dark:text-zinc-900',
     purple: 'bg-purple-500 dark:bg-purple-400 text-white dark:text-zinc-900',
@@ -325,6 +365,7 @@ const MenuButton: React.FC<{
   return (
     <button
       onClick={onClick}
+      style={{ animationDelay: delay }}
       className={`
         glass-card
         ${colorClasses[color]}
@@ -335,6 +376,7 @@ const MenuButton: React.FC<{
         active:scale-95
         transition-all duration-200
         min-w-[200px]
+        animate-in fade-in slide-in-from-bottom-8 zoom-in-50 duration-300 fill-mode-forwards
       `}
     >
       <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
