@@ -35,3 +35,31 @@ export interface MasterMixCalculation {
   waterVolume: number; // µL per reaction
   totalWaterVolume: number; // µL (waterVolume × effectiveSampleCount)
 }
+
+/**
+ * PCR Protocol Step - Single temperature stage
+ */
+export interface PCRStep {
+  name: string; // e.g., "Initial Denaturation", "Denature", "Anneal", "Extend", "Final Extension"
+  temperature: number; // °C
+  duration: number; // seconds
+}
+
+/**
+ * PCR Protocol - Complete thermocycler program
+ */
+export interface PCRProtocol {
+  id: string;
+  name: string;
+  description?: string;
+  initialDenaturation: PCRStep; // e.g., 98°C for 30s
+  cycles: number; // Number of cycles to repeat
+  cycleSteps: {
+    denature: PCRStep; // e.g., 98°C for 10s
+    anneal: PCRStep; // e.g., 60°C for 20s
+    extend: PCRStep; // e.g., 72°C for 30s/kb
+  };
+  finalExtension: PCRStep; // e.g., 72°C for 2min
+  hold: PCRStep; // e.g., 4°C forever
+  rampRate: number; // °C/second (default: 3)
+}

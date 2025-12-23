@@ -1,6 +1,7 @@
 import React from 'react';
 import { PrimerAnalyst } from './pcr/PrimerAnalyst';
 import { MasterMix } from './pcr/MasterMix';
+import { VisualCycler } from './pcr/VisualCycler';
 
 /**
  * PCRView - Main container for the PCR module
@@ -8,8 +9,7 @@ import { MasterMix } from './pcr/MasterMix';
  * Includes:
  * - Primer Analyst: Tm calculation and primer pair validation
  * - Master Mix Calculator: PCR reagent volume calculations
- *
- * Future expansion: Tm Calculator, Thermocycler Visualizer
+ * - Thermocycler Visualizer: Visual PCR protocol with playback animation
  */
 export const PCRView: React.FC = () => {
   return (
@@ -20,6 +20,11 @@ export const PCRView: React.FC = () => {
       <div className="w-full border-t border-[var(--md-outline-variant)]"></div>
 
       <MasterMix />
+
+      {/* Divider */}
+      <div className="w-full border-t border-[var(--md-outline-variant)]"></div>
+
+      <VisualCycler />
     </div>
   );
 };
