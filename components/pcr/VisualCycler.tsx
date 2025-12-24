@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Play, Pause, RotateCcw, FlaskConical, ChevronDown, ChevronUp } from 'lucide-react';
 import { PCRProtocol, PCRStep } from '../../types/pcr';
+import { M3TextField } from '../ui/M3TextField';
 
 /**
  * VisualCycler - PCR Thermocycler Visualizer
@@ -511,81 +512,57 @@ export const VisualCycler: React.FC = () => {
           <div className="space-y-3">
             <h4 className="text-sm font-semibold text-[var(--md-on-surface)] uppercase tracking-wider">Initial Denaturation</h4>
             <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <label className="block text-xs font-medium text-[var(--md-on-surface-variant)]">
-                  Temperature (°C)
-                </label>
-                <input
-                  type="number"
-                  value={protocol.initialDenaturation.temperature}
-                  onChange={(e) => updateStep('initialDenaturation', 'temperature', parseFloat(e.target.value) || 0)}
-                  className="w-full px-3 py-2 rounded-lg bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--md-on-surface)] font-mono text-sm"
-                  min="0"
-                  max="100"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="block text-xs font-medium text-[var(--md-on-surface-variant)]">
-                  Duration (sec)
-                </label>
-                <input
-                  type="number"
-                  value={protocol.initialDenaturation.duration}
-                  onChange={(e) => updateStep('initialDenaturation', 'duration', parseFloat(e.target.value) || 0)}
-                  className="w-full px-3 py-2 rounded-lg bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--md-on-surface)] font-mono text-sm"
-                  min="0"
-                />
-              </div>
+              <M3TextField
+                label="Temperature"
+                value={protocol.initialDenaturation.temperature.toString()}
+                onChange={(val) => updateStep('initialDenaturation', 'temperature', parseFloat(val) || 0)}
+                type="number"
+                inputMode="numeric"
+                suffix="°C"
+              />
+              <M3TextField
+                label="Duration"
+                value={protocol.initialDenaturation.duration.toString()}
+                onChange={(val) => updateStep('initialDenaturation', 'duration', parseFloat(val) || 0)}
+                type="number"
+                inputMode="numeric"
+                suffix="sec"
+              />
             </div>
           </div>
 
           {/* Cycles */}
           <div className="space-y-3">
             <h4 className="text-sm font-semibold text-[var(--md-on-surface)] uppercase tracking-wider">Cycles</h4>
-            <div className="space-y-2">
-              <label className="block text-xs font-medium text-[var(--md-on-surface-variant)]">
-                Number of Cycles
-              </label>
-              <input
-                type="number"
-                value={protocol.cycles}
-                onChange={(e) => setProtocol({ ...protocol, cycles: parseInt(e.target.value) || 1 })}
-                className="w-full px-3 py-2 rounded-lg bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--md-on-surface)] font-mono text-sm"
-                min="1"
-                max="50"
-              />
-            </div>
+            <M3TextField
+              label="Number of Cycles"
+              value={protocol.cycles.toString()}
+              onChange={(val) => setProtocol({ ...protocol, cycles: parseInt(val) || 1 })}
+              type="number"
+              inputMode="numeric"
+            />
           </div>
 
           {/* Denature */}
           <div className="space-y-3">
             <h4 className="text-sm font-semibold text-[var(--md-on-surface)] uppercase tracking-wider">Denature</h4>
             <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <label className="block text-xs font-medium text-[var(--md-on-surface-variant)]">
-                  Temperature (°C)
-                </label>
-                <input
-                  type="number"
-                  value={protocol.cycleSteps.denature.temperature}
-                  onChange={(e) => updateStep('cycleSteps.denature', 'temperature', parseFloat(e.target.value) || 0)}
-                  className="w-full px-3 py-2 rounded-lg bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--md-on-surface)] font-mono text-sm"
-                  min="0"
-                  max="100"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="block text-xs font-medium text-[var(--md-on-surface-variant)]">
-                  Duration (sec)
-                </label>
-                <input
-                  type="number"
-                  value={protocol.cycleSteps.denature.duration}
-                  onChange={(e) => updateStep('cycleSteps.denature', 'duration', parseFloat(e.target.value) || 0)}
-                  className="w-full px-3 py-2 rounded-lg bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--md-on-surface)] font-mono text-sm"
-                  min="0"
-                />
-              </div>
+              <M3TextField
+                label="Temperature"
+                value={protocol.cycleSteps.denature.temperature.toString()}
+                onChange={(val) => updateStep('cycleSteps.denature', 'temperature', parseFloat(val) || 0)}
+                type="number"
+                inputMode="numeric"
+                suffix="°C"
+              />
+              <M3TextField
+                label="Duration"
+                value={protocol.cycleSteps.denature.duration.toString()}
+                onChange={(val) => updateStep('cycleSteps.denature', 'duration', parseFloat(val) || 0)}
+                type="number"
+                inputMode="numeric"
+                suffix="sec"
+              />
             </div>
           </div>
 
@@ -593,31 +570,22 @@ export const VisualCycler: React.FC = () => {
           <div className="space-y-3">
             <h4 className="text-sm font-semibold text-[var(--md-on-surface)] uppercase tracking-wider">Anneal</h4>
             <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <label className="block text-xs font-medium text-[var(--md-on-surface-variant)]">
-                  Temperature (°C)
-                </label>
-                <input
-                  type="number"
-                  value={protocol.cycleSteps.anneal.temperature}
-                  onChange={(e) => updateStep('cycleSteps.anneal', 'temperature', parseFloat(e.target.value) || 0)}
-                  className="w-full px-3 py-2 rounded-lg bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--md-on-surface)] font-mono text-sm"
-                  min="0"
-                  max="100"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="block text-xs font-medium text-[var(--md-on-surface-variant)]">
-                  Duration (sec)
-                </label>
-                <input
-                  type="number"
-                  value={protocol.cycleSteps.anneal.duration}
-                  onChange={(e) => updateStep('cycleSteps.anneal', 'duration', parseFloat(e.target.value) || 0)}
-                  className="w-full px-3 py-2 rounded-lg bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--md-on-surface)] font-mono text-sm"
-                  min="0"
-                />
-              </div>
+              <M3TextField
+                label="Temperature"
+                value={protocol.cycleSteps.anneal.temperature.toString()}
+                onChange={(val) => updateStep('cycleSteps.anneal', 'temperature', parseFloat(val) || 0)}
+                type="number"
+                inputMode="numeric"
+                suffix="°C"
+              />
+              <M3TextField
+                label="Duration"
+                value={protocol.cycleSteps.anneal.duration.toString()}
+                onChange={(val) => updateStep('cycleSteps.anneal', 'duration', parseFloat(val) || 0)}
+                type="number"
+                inputMode="numeric"
+                suffix="sec"
+              />
             </div>
           </div>
 
@@ -625,31 +593,22 @@ export const VisualCycler: React.FC = () => {
           <div className="space-y-3">
             <h4 className="text-sm font-semibold text-[var(--md-on-surface)] uppercase tracking-wider">Extend</h4>
             <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <label className="block text-xs font-medium text-[var(--md-on-surface-variant)]">
-                  Temperature (°C)
-                </label>
-                <input
-                  type="number"
-                  value={protocol.cycleSteps.extend.temperature}
-                  onChange={(e) => updateStep('cycleSteps.extend', 'temperature', parseFloat(e.target.value) || 0)}
-                  className="w-full px-3 py-2 rounded-lg bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--md-on-surface)] font-mono text-sm"
-                  min="0"
-                  max="100"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="block text-xs font-medium text-[var(--md-on-surface-variant)]">
-                  Duration (sec)
-                </label>
-                <input
-                  type="number"
-                  value={protocol.cycleSteps.extend.duration}
-                  onChange={(e) => updateStep('cycleSteps.extend', 'duration', parseFloat(e.target.value) || 0)}
-                  className="w-full px-3 py-2 rounded-lg bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--md-on-surface)] font-mono text-sm"
-                  min="0"
-                />
-              </div>
+              <M3TextField
+                label="Temperature"
+                value={protocol.cycleSteps.extend.temperature.toString()}
+                onChange={(val) => updateStep('cycleSteps.extend', 'temperature', parseFloat(val) || 0)}
+                type="number"
+                inputMode="numeric"
+                suffix="°C"
+              />
+              <M3TextField
+                label="Duration"
+                value={protocol.cycleSteps.extend.duration.toString()}
+                onChange={(val) => updateStep('cycleSteps.extend', 'duration', parseFloat(val) || 0)}
+                type="number"
+                inputMode="numeric"
+                suffix="sec"
+              />
             </div>
           </div>
 
@@ -657,31 +616,22 @@ export const VisualCycler: React.FC = () => {
           <div className="space-y-3">
             <h4 className="text-sm font-semibold text-[var(--md-on-surface)] uppercase tracking-wider">Final Extension</h4>
             <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <label className="block text-xs font-medium text-[var(--md-on-surface-variant)]">
-                  Temperature (°C)
-                </label>
-                <input
-                  type="number"
-                  value={protocol.finalExtension.temperature}
-                  onChange={(e) => updateStep('finalExtension', 'temperature', parseFloat(e.target.value) || 0)}
-                  className="w-full px-3 py-2 rounded-lg bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--md-on-surface)] font-mono text-sm"
-                  min="0"
-                  max="100"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="block text-xs font-medium text-[var(--md-on-surface-variant)]">
-                  Duration (sec)
-                </label>
-                <input
-                  type="number"
-                  value={protocol.finalExtension.duration}
-                  onChange={(e) => updateStep('finalExtension', 'duration', parseFloat(e.target.value) || 0)}
-                  className="w-full px-3 py-2 rounded-lg bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--md-on-surface)] font-mono text-sm"
-                  min="0"
-                />
-              </div>
+              <M3TextField
+                label="Temperature"
+                value={protocol.finalExtension.temperature.toString()}
+                onChange={(val) => updateStep('finalExtension', 'temperature', parseFloat(val) || 0)}
+                type="number"
+                inputMode="numeric"
+                suffix="°C"
+              />
+              <M3TextField
+                label="Duration"
+                value={protocol.finalExtension.duration.toString()}
+                onChange={(val) => updateStep('finalExtension', 'duration', parseFloat(val) || 0)}
+                type="number"
+                inputMode="numeric"
+                suffix="sec"
+              />
             </div>
           </div>
         </div>

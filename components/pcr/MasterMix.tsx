@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Beaker, Info } from 'lucide-react';
 import { PCR_KIT_PRESETS } from '../../data/pcr-kits';
 import { MasterMixCalculation, PCRKitPreset } from '../../types/pcr';
+import { M3TextField } from '../ui/M3TextField';
 
 export const MasterMix: React.FC = () => {
   const [selectedKitId, setSelectedKitId] = useState(PCR_KIT_PRESETS[0].id);
@@ -77,20 +78,15 @@ export const MasterMix: React.FC = () => {
               <span className="text-xs font-medium text-[var(--md-on-surface-variant)]">{kit.manufacturer}</span>
             </div>
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-[var(--md-on-surface)]">
-                Select Kit
-              </label>
-              <select
+              <M3TextField
+                label="Select Kit"
                 value={selectedKitId}
-                onChange={(e) => setSelectedKitId(e.target.value)}
-                className="w-full px-4 py-2 rounded-xl bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-[var(--md-on-surface)]"
-              >
-                {PCR_KIT_PRESETS.map((preset) => (
-                  <option key={preset.id} value={preset.id}>
-                    {preset.name} ({preset.manufacturer})
-                  </option>
-                ))}
-              </select>
+                onChange={setSelectedKitId}
+                options={PCR_KIT_PRESETS.map((preset) => ({
+                  label: `${preset.name} (${preset.manufacturer})`,
+                  value: preset.id
+                }))}
+              />
               <p className="text-xs text-[var(--md-on-surface-variant)]">{kit.description}</p>
             </div>
           </div>
@@ -102,31 +98,26 @@ export const MasterMix: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-6">
           {/* Reaction Volume */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-[var(--md-on-surface)]">
-              Reaction Volume (µL)
-            </label>
-            <input
+            <M3TextField
+              label="Reaction Volume"
+              value={reactionVolume.toString()}
+              onChange={(val) => setReactionVolume(Math.max(1, parseInt(val) || 0))}
               type="number"
-              value={reactionVolume}
-              onChange={(e) => setReactionVolume(Math.max(1, parseInt(e.target.value) || 0))}
-              className="w-full px-4 py-2 rounded-xl bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-[var(--md-on-surface)]"
-              min="1"
+              inputMode="numeric"
               step="1"
+              suffix="µL"
             />
             <p className="text-xs text-[var(--md-on-surface-variant)]">Standard: 50 µL, Miniaturized: 20-25 µL</p>
           </div>
 
           {/* Sample Count */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-[var(--md-on-surface)]">
-              Sample Count
-            </label>
-            <input
+            <M3TextField
+              label="Sample Count"
+              value={sampleCount.toString()}
+              onChange={(val) => setSampleCount(Math.max(1, parseInt(val) || 0))}
               type="number"
-              value={sampleCount}
-              onChange={(e) => setSampleCount(Math.max(1, parseInt(e.target.value) || 0))}
-              className="w-full px-4 py-2 rounded-xl bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-[var(--md-on-surface)]"
-              min="1"
+              inputMode="numeric"
               step="1"
             />
             <p className="text-xs text-[var(--md-on-surface-variant)]">

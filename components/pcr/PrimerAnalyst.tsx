@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AlertCircle, CheckCircle, AlertTriangle, Dna } from 'lucide-react';
 import { calculateTm, checkGCContent, check3PrimeClamp, analyzePrimerPair, TmResult, GCCheckResult, ClampCheckResult } from '../../utils/pcr-math';
+import { M3TextField } from '../ui/M3TextField';
 
 export const PrimerAnalyst: React.FC = () => {
   const [forwardPrimer, setForwardPrimer] = useState('');
@@ -123,11 +124,15 @@ export const PrimerAnalyst: React.FC = () => {
               <span className="text-xs uppercase tracking-wider text-purple-600 dark:text-purple-400 font-bold">5' → 3'</span>
             </div>
 
-          <textarea
+          <M3TextField
+            label="Forward Primer Sequence"
             value={forwardPrimer}
-            onChange={(e) => setForwardPrimer(e.target.value.toUpperCase())}
+            onChange={(val) => setForwardPrimer(val.toUpperCase())}
+            multiline
+            rows={2}
+            type="text"
+            inputMode="text"
             placeholder="Enter forward primer sequence (e.g., ATGCGATCGTAGCTAG...)"
-            className="w-full h-16 p-3 rounded-xl bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] resize-none focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--md-on-surface)] font-mono text-sm placeholder:text-[var(--md-on-surface-variant)] placeholder:font-sans"
           />
 
           {/* Forward Primer Analysis */}
@@ -191,11 +196,15 @@ export const PrimerAnalyst: React.FC = () => {
               <span className="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-bold">5' → 3'</span>
             </div>
 
-          <textarea
+          <M3TextField
+            label="Reverse Primer Sequence"
             value={reversePrimer}
-            onChange={(e) => setReversePrimer(e.target.value.toUpperCase())}
+            onChange={(val) => setReversePrimer(val.toUpperCase())}
+            multiline
+            rows={2}
+            type="text"
+            inputMode="text"
             placeholder="Enter reverse primer sequence (e.g., CTAGCTAGCGATCGCAT...)"
-            className="w-full h-16 p-3 rounded-xl bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-[var(--md-on-surface)] font-mono text-sm placeholder:text-[var(--md-on-surface-variant)] placeholder:font-sans"
           />
 
           {/* Reverse Primer Analysis */}
