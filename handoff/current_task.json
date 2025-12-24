@@ -1,6 +1,11 @@
 {
-    "task_id": null,
-    "task_description": "No active task. Waiting for user input.",
-    "files_to_edit": [],
-    "task_type": "idle"
+    "task_id": "17",
+    "task_description": "Refactor custom CSS animations in `index.css` to use `tailwindcss-animate`. \n1. Install `tailwindcss-animate`.\n2. Configure `tailwind.config.js` (create if missing).\n3. Remove custom `@keyframes` (fadeIn, zoomIn, etc) from `index.css`.\n4. Verify `Navigation.tsx` classes work with the new plugin.",
+    "files_to_edit": [
+        "package.json",
+        "index.css",
+        "tailwind.config.js",
+        "components/Navigation.tsx"
+    ],
+    "task_type": "refactor"
 }
