@@ -58,28 +58,27 @@ export const M3TextField: React.FC<M3TextFieldProps> = ({
   options,
   placeholder: customPlaceholder
 }) => {
-  // Determine which element to render
-  const renderInput = () => {
-    const baseClasses = `
-      peer block w-full rounded-[var(--md-radius)] border bg-transparent px-4
-      text-base text-[var(--md-on-surface)]
-      border-[var(--md-outline)]
-      focus:border-[var(--md-primary)] focus:ring-1 focus:ring-[var(--md-primary)] focus:outline-none
-      disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-[var(--md-surface-container)]
-      placeholder-transparent
-      transition-colors duration-200
-      ${Icon ? 'pl-11' : ''}
-      ${suffix || tooltip ? 'pr-12' : ''}
-    `;
+  // Shared classes for input/textarea/select
+  // Note: Borders are handled by the sibling fieldset, so we remove them here
+  const baseElementClasses = `
+    peer block w-full rounded-[var(--md-radius)] bg-transparent px-4
+    text-base text-[var(--md-on-surface)]
+    placeholder-transparent
+    focus:outline-none focus:ring-0
+    disabled:opacity-50 disabled:cursor-not-allowed
+    transition-colors duration-200
+    ${Icon ? 'pl-11' : ''}
+    ${suffix || tooltip ? 'pr-12' : ''}
+  `;
 
+  const renderInput = () => {
     if (options) {
-      // Render select dropdown
       return (
         <select
           disabled={disabled}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className={`${baseClasses} h-14 py-2.5 appearance-none`}
+          className={`${baseElementClasses} h-14 py-2.5 appearance-none`}
         >
           {options.map((opt) => (
             <option key={opt.value} value={opt.value}>
@@ -91,20 +90,18 @@ export const M3TextField: React.FC<M3TextFieldProps> = ({
     }
 
     if (multiline) {
-      // Render textarea
       return (
         <textarea
           disabled={disabled}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           rows={rows}
-          placeholder=" " /* Required for peer-placeholder-shown */
-          className={`${baseClasses} py-3 resize-none font-mono`}
+          placeholder=" "
+          className={`${baseElementClasses} py-3 resize-none font-mono`}
         />
       );
     }
 
-    // Render regular input
     return (
       <input
         type={type}
@@ -113,9 +110,9 @@ export const M3TextField: React.FC<M3TextFieldProps> = ({
         disabled={disabled}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder=" " /* Required for peer-placeholder-shown */
+        placeholder=" "
         className={`
-          ${baseClasses} h-14 py-2.5 font-mono
+          ${baseElementClasses} h-14 py-2.5 font-mono
           appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]
         `}
       />
@@ -123,32 +120,53 @@ export const M3TextField: React.FC<M3TextFieldProps> = ({
   };
 
   return (
-    <div className="relative hover:z-30 transition-z duration-0">
+    <div className="relative hover:z-30 transition-z duration-0 bg-transparent">
       {renderInput()}
 
-      {/* Floating Label */}
+      {/* Floating Label (Visible) */}
       <label className={`
         absolute left-3 top-0 -translate-y-1/2 px-1 text-xs text-[var(--md-on-surface-variant)] transition-all duration-200
-        bg-[#FFFFFF] dark:bg-[#27272a] rounded-sm
         peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-[var(--md-on-surface-variant)]
         peer-focus:top-0 peer-focus:text-xs peer-focus:text-[var(--md-primary)]
         peer-disabled:opacity-50
         ${Icon ? 'peer-placeholder-shown:left-11' : ''}
         pointer-events-none select-none truncate max-w-[calc(100%-2rem)]
+        z-20
       `}>
         {label}
       </label>
 
+      {/* Fieldset Border & Notch (The trick for transparency) */}
+      <fieldset className={`
+        absolute inset-0 -top-2.5 rounded-[var(--md-radius)] pointer-events-none
+        border border-[var(--md-outline)]
+        peer-focus:border-[var(--md-primary)] peer-focus:border-2
+        peer-disabled:border-[var(--md-surface-container)]
+        transition-colors duration-200
+        px-2.5
+      `}>
+        {/* Legend creates the gap in the border. Content matches label but is invisible. */}
+        <legend className={`
+           h-2 p-0 invisible overflow-hidden whitespace-nowrap border-0
+           text-xs font-medium transition-all duration-200
+           max-w-[0.01px]
+           peer-focus:max-w-full peer-focus:px-1
+           peer-[:not(:placeholder-shown)]:max-w-full peer-[:not(:placeholder-shown)]:px-1
+         `}>
+          <span className="opacity-0 visible">{label}</span>
+        </legend>
+      </fieldset>
+
       {/* Leading Icon */}
       {Icon && (
-        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--md-on-surface-variant)] pointer-events-none peer-focus:text-[var(--md-primary)] transition-colors duration-200">
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--md-on-surface-variant)] pointer-events-none peer-focus:text-[var(--md-primary)] transition-colors duration-200 z-10">
           <Icon className="w-5 h-5" />
         </div>
       )}
 
       {/* Trailing Suffix / Tooltip */}
       {(suffix || tooltip) && (
-        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2 z-10">
           {suffix && <span className="text-[var(--md-on-surface-variant)] text-sm font-medium pointer-events-none">{suffix}</span>}
           {tooltip && <InfoTooltip text={tooltip} />}
         </div>
