@@ -1,11 +1,10 @@
 {
-    "task_id": "17",
-    "task_description": "Refactor custom CSS animations in `index.css` to use `tailwindcss-animate`. \n1. Install `tailwindcss-animate`.\n2. Configure `tailwind.config.js` (create if missing).\n3. Remove custom `@keyframes` (fadeIn, zoomIn, etc) from `index.css`.\n4. Verify `Navigation.tsx` classes work with the new plugin.",
+    "task_id": "18",
+    "task_description": "Refactor PCR module components (`PrimerAnalyst`, `MasterMix`, `VisualCycler`) to match the style of `Calculator.tsx`. \n1. Adopt the 'Material 3' split-header card design (gray header, white/glass body).\n2. Replace standard inputs with 'Filled + Underline' M3 style inputs.\n3. Follow the detailed plan in `spec/implementation_plan_style_alignment.md`.",
     "files_to_edit": [
-        "package.json",
-        "index.css",
-        "tailwind.config.js",
-        "components/Navigation.tsx"
+        "components/pcr/PrimerAnalyst.tsx",
+        "components/pcr/MasterMix.tsx",
+        "components/pcr/VisualCycler.tsx"
     ],
     "task_type": "refactor"
 }

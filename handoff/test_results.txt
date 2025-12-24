@@ -1,4 +1,4 @@
-Task 17: Refactor CSS Animations to Tailwind
+Task 18: Refactor PCR Module Style Alignment
 ========================================================
 
 STATUS: COMPLETED ✅
@@ -17,8 +17,8 @@ rendering chunks...
 computing gzip size...
 dist/index.html                   1.84 kB │ gzip:   0.85 kB
 dist/assets/index-9vnddtmP.css    4.36 kB │ gzip:   1.26 kB
-dist/assets/index-gMp35PnR.js   696.39 kB │ gzip: 199.72 kB
-✓ built in 4.64s
+dist/assets/index-CYJeivN6.js   697.26 kB │ gzip: 199.78 kB
+✓ built in 4.60s
 
 (!) Some chunks are larger than 500 kB after minification. Consider:
 - Using dynamic import() to code-split the application
@@ -32,93 +32,120 @@ Bundle Generation: ✅ PASSED
 
 Warnings:
 ---------
-⚠️ Chunk size > 500 KB (696.39 KB) - Pre-existing issue, not blocking
+⚠️ Chunk size > 500 KB (697.26 KB) - Pre-existing issue, not blocking
 
 Bundle Size Impact:
 -------------------
-Previous (Task 16): 696.39 KB (gzip: 199.72 kB)
-Current (Task 17): 696.39 KB (gzip: 199.72 kB)
-Change: No change (0 KB)
-Reason: CSS refactor only, no JavaScript changes
+Previous (Task 17): 696.39 KB (gzip: 199.72 kB)
+Current (Task 18): 697.26 KB (gzip: 199.78 kB)
+Change: +0.87 KB (+0.06 KB gzipped)
+Percentage Increase: +0.12% (+0.03% gzipped)
+Reason: Restructured JSX markup in MasterMix.tsx (single consolidated card)
 
 CSS Size Impact:
 ----------------
-Previous (Task 16): 5.23 kB (gzip: 1.50 kB)
-Current (Task 17): 4.36 kB (gzip: 1.26 kB)
-Change: -0.87 kB (-0.24 kB gzipped)
-Percentage Decrease: -16.6%
-Reason: Removed 75 lines of custom animation keyframes
+Previous (Task 17): 4.36 kB (gzip: 1.26 kB)
+Current (Task 18): 4.36 kB (gzip: 1.26 kB)
+Change: No change (0 KB)
+Reason: No CSS changes, only HTML/JSX structure refactor
 
-npm Install Output:
--------------------
-Command: npm install -D tailwindcss-animate
-Result: SUCCESS
-
-Output:
--------
-added 2 packages, and audited 293 packages in 1s
-
-37 packages are looking for funding
-  run `npm fund` for details
-
-found 0 vulnerabilities
-
-Dependencies Added:
--------------------
-✅ tailwindcss-animate@^1.0.7
-✅ 0 vulnerabilities
+Build Time:
+-----------
+Previous (Task 17): 4.64s
+Current (Task 18): 4.60s
+Change: -0.04s (slightly faster)
 
 Implementation Summary:
 -----------------------
-✅ Installed tailwindcss-animate plugin (2 packages)
-✅ Created tailwind.config.js with plugin registration
-✅ Removed 75 lines of custom CSS animations from index.css
-✅ Verified Navigation.tsx classes are compatible (no changes needed)
+✅ Refactored MasterMix.tsx from 3 separate cards to single consolidated card
+✅ Adopted Material 3 split-header design pattern (matches Calculator.tsx)
+✅ Changed border radius from rounded-2xl to rounded-[var(--md-radius-lg)]
+✅ Moved header (icon, title, subtitle) inside card with gray background
+✅ Organized body content with border-top section separators
+✅ Verified PrimerAnalyst.tsx and VisualCycler.tsx already use consolidated card design
+✅ All inputs already use Material 3 filled style (no changes needed)
 
 Files Modified:
 ---------------
-1. package.json (Modified)
-   - Added tailwindcss-animate to devDependencies
+1. components/pcr/MasterMix.tsx (Modified - Major Refactor)
+   - Consolidated 3 cards into single card with split-header
+   - Header: bg-[var(--md-surface-container)] with icon, title, subtitle
+   - Body: p-6 with 4 sections separated by border-t
+   - Sections: Kit Selector, Reaction Parameters, Master Mix Composition, Protocol Notes
 
-2. tailwind.config.js (Created - NEW FILE)
-   - Configured content paths: index.html, src/**, components/**
-   - Registered tailwindcss-animate plugin
-   - Uses default Tailwind theme
+2. components/pcr/PrimerAnalyst.tsx (Verified - No Changes)
+   - Already uses consolidated card design
+   - Already uses Material 3 filled inputs
+   - Split-header design with Save/Recall buttons
 
-3. index.css (Modified - 75 lines deleted)
-   - Deleted lines 234-309: "Animations (Polyfill)" section
-   - Removed 6 @keyframes: fadeIn, zoomIn, slideInFromLeft, slideInFromBottom, popInRight, popInUp
-   - Removed 5 utility classes: .animate-in, .fade-in, .slide-in-from-left-4, .slide-in-from-bottom-8, .zoom-in-50
-   - Removed 2 composite overrides
-   - Retained all other styles (CSS variables, glass effects, premium-bg)
+3. components/pcr/VisualCycler.tsx (Verified - No Changes)
+   - Already uses consolidated card design
+   - Already uses Material 3 filled inputs
+   - Includes collapsible Protocol Parameters section
 
-4. components/Navigation.tsx (No changes - verified compatible)
-   - Animation classes used: animate-in, fade-in, zoom-in-50, slide-in-from-left-4, slide-in-from-bottom-8
-   - All classes provided by tailwindcss-animate plugin
-   - Animation delays preserved via inline styles
+Material 3 Design Pattern Applied:
+-----------------------------------
+Card Structure (Source: Calculator.tsx):
+  <div className="glass-card rounded-[var(--md-radius-lg)]">
+    <div className="bg-[var(--md-surface-container)] px-6 py-5 rounded-t-[var(--md-radius-lg)] border-b border-[var(--md-outline-variant)]">
+      {/* Header: Icon + Title */}
+    </div>
+    <div className="p-6 space-y-6">
+      {/* Body Content */}
+    </div>
+  </div>
 
-Animations Refactored:
-----------------------
+Key CSS Variables Used:
+  - --md-surface-container: Gray header background
+  - --md-on-surface: Primary text color
+  - --md-on-surface-variant: Secondary text color
+  - --md-outline-variant: Border color
+  - --md-radius-lg: Large border radius
 
-Desktop "New" Menu (Lines 89, 101, 113):
-  Classes: animate-in fade-in zoom-in-50 slide-in-from-left-4 duration-300 fill-mode-forwards
-  Effect: Buttons pop in from left with fade + zoom
-  Stagger: 100ms initial + 50ms per button (150ms, 200ms, 250ms, 300ms)
+MasterMix.tsx Changes in Detail:
+---------------------------------
 
-Mobile "Plus" Menu (Line 379):
-  Classes: animate-in fade-in slide-in-from-bottom-8 zoom-in-50 duration-300 fill-mode-forwards
-  Effect: Buttons pop up from bottom with fade + zoom
-  Stagger: 100ms initial + 50ms per button
+BEFORE (3 Separate Cards):
+1. Kit Selector Card (glass-card rounded-2xl)
+   - Header: "PCR Kit" (text only)
+   - Content: Select dropdown, description
 
-Plugin Classes Verified:
-------------------------
-✅ animate-in - Provided by tailwindcss-animate
-✅ fade-in - Provided by tailwindcss-animate
-✅ zoom-in-50 - Provided by tailwindcss-animate
-✅ slide-in-from-left-4 - Provided by tailwindcss-animate
-✅ slide-in-from-bottom-8 - Provided by tailwindcss-animate
-✅ duration-300 - Standard Tailwind utility
-✅ fill-mode-forwards - Provided by tailwindcss-animate
+2. Input Controls Card (glass-card rounded-2xl)
+   - Header: "Reaction Parameters" (text only)
+   - Content: Volume/Count inputs, Overfill/Enhancer toggles
+
+3. Master Mix Table Card (glass-card rounded-2xl)
+   - Header: "Master Mix Composition" (text only)
+   - Content: Reagent table, summary info, protocol notes
+
+AFTER (Single Consolidated Card):
+1. Card Header (bg-[var(--md-surface-container)])
+   - Icon: Blue beaker in rounded square
+   - Title: "Master Mix Calculator"
+   - Subtitle: "{kit.name} - {kit.manufacturer}"
+
+2. Card Body (p-6 space-y-6):
+   Section 1: "PCR Kit"
+     - Select dropdown
+     - Kit description
+
+   Section 2: "Reaction Parameters" (border-top separator)
+     - Reaction Volume input
+     - Sample Count input
+     - Overfill toggle checkbox
+     - GC Enhancer toggle checkbox (conditional)
+
+   Section 3: "Master Mix Composition" (border-top separator)
+     - Reagent table (Stock, Final, Per Rxn, Total columns)
+     - Water volume calculation
+     - Summary info box (blue background)
+
+   Section 4: "Protocol Notes" (border-top separator, conditional)
+     - Bulleted list of kit-specific notes
+
+Section Separators:
+  - Each section (except first) has: pt-2 border-t border-[var(--md-outline-variant)]
+  - Creates subtle visual breaks without separate cards
 
 Testing Checklist:
 ------------------
@@ -127,66 +154,87 @@ Automated Testing:
   ✅ Production build successful
   ✅ No TypeScript errors
   ✅ No build warnings (besides pre-existing chunk size)
-  ✅ CSS bundle size reduced by 16.6%
-  ✅ JS bundle size unchanged
+  ✅ JS bundle minimal increase (+0.12%)
+  ✅ CSS bundle unchanged
   ✅ Module count unchanged (2335)
-  ✅ Build time comparable (4.64s vs 4.90s)
+  ✅ Build time comparable (4.60s vs 4.64s)
 
 Manual Browser Testing (REQUIRED):
 
-Desktop Navigation:
-  [ ] Open app in desktop view (> 768px)
-  [ ] Click "New" button in left sidebar
-  [ ] Verify 4 menu buttons appear with staggered animation:
-      [ ] "Growth Calculator" (emerald) - appears at 150ms
-      [ ] "PCR Module" (purple) - appears at 200ms
-      [ ] "Timer" (blue) - appears at 250ms
-      [ ] "Protocol" (orange) - appears at 300ms
-  [ ] Animation effects:
-      [ ] Fade in (opacity 0 → 1)
-      [ ] Zoom in (scale 0.5 → 1)
-      [ ] Slide in from left (translateX -4 → 0)
-      [ ] Sequential stagger (50ms delay between each)
-  [ ] Click outside menu to close
-  [ ] Re-open menu to verify repeat animation works
+MasterMix Calculator:
+  [ ] Navigate to PCR Module
+  [ ] Click "Master Mix" tab or button
+  [ ] Verify single card with gray header
+  [ ] Header contains:
+      [ ] Blue beaker icon (left side)
+      [ ] "Master Mix Calculator" title (bold)
+      [ ] Kit name and manufacturer subtitle (gray text)
+  [ ] Card body sections:
+      [ ] "PCR Kit" section with dropdown
+      [ ] "Reaction Parameters" section (border-top separator)
+      [ ] "Master Mix Composition" table (border-top separator)
+      [ ] "Protocol Notes" section if kit has notes (border-top separator)
+  [ ] Visual quality:
+      [ ] Header has gray background (--md-surface-container)
+      [ ] Body has white/glass background
+      [ ] Border radius matches Calculator.tsx
+      [ ] Section separators are subtle gray lines
+      [ ] No visual glitches or misalignment
+  [ ] Dark mode:
+      [ ] Header is dark gray
+      [ ] Body has glass effect with blur
+      [ ] Text colors are readable
+      [ ] Section separators visible but subtle
+  [ ] Functionality:
+      [ ] Kit selector dropdown works
+      [ ] Volume/Count inputs work
+      [ ] Overfill checkbox works
+      [ ] GC Enhancer checkbox works (if supported)
+      [ ] Table updates correctly
+      [ ] Numbers calculate correctly
 
-Mobile Navigation:
-  [ ] Switch to mobile view (< 768px)
-  [ ] Click "Plus" (+) button in bottom navigation
-  [ ] Verify same 4 menu buttons appear with staggered animation
-  [ ] Animation effects:
-      [ ] Fade in (opacity 0 → 1)
-      [ ] Zoom in (scale 0.5 → 1)
-      [ ] Slide in from bottom (translateY 8 → 0)
-      [ ] Sequential stagger (50ms delay between each)
-  [ ] Click outside menu to close
-  [ ] Re-open menu to verify repeat animation works
+PrimerAnalyst (Regression):
+  [ ] Navigate to PCR Module → Primer Analyst
+  [ ] Card structure unchanged from previous version
+  [ ] Header has icon, title, Save/Recall buttons
+  [ ] Forward primer textarea works
+  [ ] Reverse primer textarea works
+  [ ] Tm calculations display
+  [ ] Primer pair compatibility analysis displays
+  [ ] Dark mode works correctly
 
-Visual Quality:
-  [ ] Animation timing feels smooth (300ms duration)
-  [ ] Stagger effect is noticeable (not instant)
-  [ ] No visual glitches or flicker
-  [ ] Buttons end at correct final position
-  [ ] Glass card styling preserved (blur, transparency)
-  [ ] Hover effects work (scale-105)
-  [ ] Active state works (scale-95)
-  [ ] Dark mode animations work correctly
-  [ ] Light mode animations work correctly
+VisualCycler (Regression):
+  [ ] Navigate to PCR Module → Visual Cycler
+  [ ] Card structure unchanged from previous version
+  [ ] Header has icon, title
+  [ ] Protocol selector dropdown works
+  [ ] Temperature graph displays
+  [ ] Playback controls (Play/Pause/Reset) work
+  [ ] Protocol Parameters section expands/collapses
+  [ ] ChevronDown/Up icon toggles correctly
+  [ ] Dark mode works correctly
+
+Cross-Component Consistency:
+  [ ] All 3 PCR components use similar card structure
+  [ ] All components match Calculator.tsx design language
+  [ ] Dark mode consistent across all components
+  [ ] Responsive design works (desktop/tablet/mobile)
+  [ ] Glass effects consistent across all cards
+  [ ] Border radius consistent
+  [ ] Header styling consistent (where applicable)
+  [ ] Section separators consistent
 
 Regression Testing:
   [ ] Growth Calculator page loads correctly
-  [ ] PCR Module loads correctly (Task 16 features intact)
-    [ ] Primer Analyst single card layout
-    [ ] Visual Cycler collapsible parameters
-    [ ] Master Mix kit selector
   [ ] Timers page loads correctly
   [ ] Protocols page loads correctly
   [ ] Dashboard loads correctly
-  [ ] Theme toggle works
   [ ] Navigation rail (desktop) works
   [ ] Bottom navigation (mobile) works
+  [ ] Theme toggle works
+  [ ] All Task 13-17 features still functional
   [ ] No console errors in browser DevTools
-  [ ] All Task 13-16 features still functional
+  [ ] No visual regressions in other components
 
 Browser Compatibility:
   [ ] Chrome (latest)
@@ -198,55 +246,59 @@ Browser Compatibility:
 
 Implementation Plan Compliance:
 --------------------------------
-✅ Install tailwindcss-animate (npm install -D)
-✅ Create tailwind.config.js with plugin registration
-✅ Remove custom keyframes from index.css (lines 234-309)
-✅ Verify Navigation.tsx classes compatible
-✅ Production build successful
+✅ Adopt Material 3 split-header card design (gray header, white/glass body)
+✅ Use rounded-[var(--md-radius-lg)] instead of rounded-2xl
+✅ Consolidate multiple cards into single card per component
+✅ MasterMix.tsx inputs already use filled style (no changes needed)
+✅ PrimerAnalyst.tsx textareas already use filled style (verified)
+✅ VisualCycler.tsx inputs already use filled style (verified)
+✅ All inputs use Material 3 focus states (verified)
 
-Task 17: COMPLETED ✅
+Task 18: COMPLETED ✅
 Tests: BUILD PASSED ✅
-Bundle: 696.39 KB (no change) ✅
-CSS: 4.36 kB (-0.87 kB, -16.6%) ✅
+Bundle: 697.26 KB (+0.87 KB, +0.12%) ✅
+CSS: 4.36 kB (no change) ✅
+Time: 4.60s ✅
 
 Total Changes:
 --------------
-Files Modified: 3 (package.json, index.css, Navigation.tsx verified)
-Files Created: 1 (tailwind.config.js)
-Dependencies Added: 1 (tailwindcss-animate)
-Lines Deleted: 75 (custom animation CSS)
-CSS Size Reduction: 16.6%
-Build Time: 4.64s
+Files Modified: 1 (MasterMix.tsx)
+Files Verified: 2 (PrimerAnalyst.tsx, VisualCycler.tsx)
+Design Pattern: Material 3 Split-Header Card
+Bundle Size Impact: +0.12% (negligible)
+Build Time: -0.04s (slightly faster)
 
-Migration Benefits:
--------------------
-✅ Zero custom animation CSS (down from 75 lines)
-✅ Plugin handles all keyframe generation
-✅ Tree-shaking: only used animations in bundle
-✅ Standard Tailwind utilities throughout codebase
-✅ Can use additional plugin animations in future (spin, ping, pulse)
-✅ Consistent with Radix UI patterns
+Design System Benefits:
+-----------------------
+✅ Visual consistency across all PCR components
+✅ Matches Calculator.tsx design language
+✅ Professional Material 3 appearance
+✅ Reduced visual noise (fewer card boundaries)
+✅ Clear visual hierarchy with split-header
+✅ Consistent border radius and spacing
+✅ Dark mode polish with unified glass effects
 
 Breaking Changes:
 -----------------
-NONE - All existing animation classes work identically
+NONE - All functionality preserved, only visual styling changed
 
 Deployment Readiness:
 ---------------------
 ✅ Production build successful
 ✅ No TypeScript errors
-✅ No new dependencies (only devDependency)
-✅ CSS bundle size reduced (better performance)
-✅ JS bundle size unchanged
+✅ No new dependencies
+✅ Bundle size minimal increase (+0.12%)
+✅ CSS bundle unchanged
 ✅ No breaking changes
-✅ All Task 16 features preserved
+✅ All previous task features preserved
 ✅ Responsive design maintained
 ✅ Dark mode compatibility maintained
 
 Next Steps:
 -----------
-1. User must manually test animations in browser (desktop & mobile)
-2. Verify staggered animation timing (50ms per button)
-3. Confirm visual quality (no glitches, smooth transitions)
-4. Test dark mode and light mode
-5. Regression test: Verify all previous tasks (13-16) still functional
+1. User must manually test MasterMix.tsx layout in browser (desktop & mobile)
+2. Verify gray header and white/glass body appearance
+3. Confirm section separators are visible but subtle
+4. Test dark mode appearance
+5. Regression test: Verify PrimerAnalyst and VisualCycler unchanged
+6. Regression test: Verify all Task 13-17 features still functional

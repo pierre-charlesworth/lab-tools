@@ -28,6 +28,8 @@ You may update `spec/PRD.md` or `spec/TASKS.md` ONLY when:
 
 All such changes must be logged in `spec/DECISIONS.md`.
 
+If you write any implementation plan, make sure a copy is in the spec directory for Claude to read
+
 ## Handoff Contract
 You write:
 - `handoff/current_task.json`
@@ -43,7 +45,6 @@ Before issuing a new task, you MUST:
 - Read `handoff/status.json`, `handoff/test_results.txt`, and `handoff/claude_output.md`
 - Confirm `status.tests_passed == true` and task_id matches `handoff/current_task.json`
 - Verify acceptance criteria were met (use tests output + diff summary)
-- Where appropriate, use your Chrome viewing ability to test verify any changes made by Claude.
 
 If `handoff/status.json` indicates:
 - `status != "completed"` OR
@@ -72,6 +73,7 @@ If the task involves UI/UX, layout, visual design, icons, or branding:
 
 If the task involves web behavior, rendering, or end-to-end validation:
 - You MUST use Chrome capabilities to verify the feature.
+- We are using a live deployment on Vercel for testing. It auto updates from Github, so in order for new changes to appear, changes must be pushed. The URL is: https://pol-tools.vercel.app/
 - Capture evidence (screenshots and/or logs) and summarize results in `spec/CHANGELOG.md`.
 - If verification fails, issue a FIX task in `handoff/current_task.json`.
 

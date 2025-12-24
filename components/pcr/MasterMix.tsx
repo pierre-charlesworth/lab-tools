@@ -60,44 +60,50 @@ export const MasterMix: React.FC = () => {
 
   return (
     <div className="max-w-5xl mx-auto p-4 sm:p-6 space-y-6">
-      {/* Header */}
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-          <Beaker className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+      {/* Single Consolidated Card */}
+      <div className="glass-card rounded-[var(--md-radius-lg)] border border-[var(--md-outline-variant)]">
+        {/* Header with Icon and Title */}
+        <div className="bg-[var(--md-surface-container)] px-6 py-5 rounded-t-[var(--md-radius-lg)] border-b border-[var(--md-outline-variant)] flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+              <Beaker className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-[var(--md-on-surface)]">Master Mix Calculator</h1>
+              <p className="text-sm text-[var(--md-on-surface-variant)]">{kit.name} - {kit.manufacturer}</p>
+            </div>
+          </div>
         </div>
-        <div>
-          <h1 className="text-2xl font-bold text-[var(--md-on-surface)]">Master Mix Calculator</h1>
-          <p className="text-sm text-[var(--md-on-surface-variant)]">{kit.name} - {kit.manufacturer}</p>
-        </div>
-      </div>
 
-      {/* Kit Selector */}
-      <div className="glass-card rounded-2xl p-6 border border-[var(--md-outline-variant)] space-y-4">
-        <h3 className="font-semibold text-[var(--md-on-surface)]">PCR Kit</h3>
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-[var(--md-on-surface)]">
-            Select Kit
-          </label>
-          <select
-            value={selectedKitId}
-            onChange={(e) => setSelectedKitId(e.target.value)}
-            className="w-full px-4 py-2 rounded-xl bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-[var(--md-on-surface)]"
-          >
-            {PCR_KIT_PRESETS.map((preset) => (
-              <option key={preset.id} value={preset.id}>
-                {preset.name} ({preset.manufacturer})
-              </option>
-            ))}
-          </select>
-          <p className="text-xs text-[var(--md-on-surface-variant)]">{kit.description}</p>
-        </div>
-      </div>
+        {/* Body Content */}
+        <div className="p-6 space-y-6">
+          {/* Kit Selector Section */}
+          <div className="space-y-4">
+            <h3 className="font-semibold text-[var(--md-on-surface)]">PCR Kit</h3>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-[var(--md-on-surface)]">
+                Select Kit
+              </label>
+              <select
+                value={selectedKitId}
+                onChange={(e) => setSelectedKitId(e.target.value)}
+                className="w-full px-4 py-2 rounded-xl bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-[var(--md-on-surface)]"
+              >
+                {PCR_KIT_PRESETS.map((preset) => (
+                  <option key={preset.id} value={preset.id}>
+                    {preset.name} ({preset.manufacturer})
+                  </option>
+                ))}
+              </select>
+              <p className="text-xs text-[var(--md-on-surface-variant)]">{kit.description}</p>
+            </div>
+          </div>
 
-      {/* Input Controls */}
-      <div className="glass-card rounded-2xl p-6 border border-[var(--md-outline-variant)] space-y-6">
-        <h3 className="font-semibold text-[var(--md-on-surface)] mb-4">Reaction Parameters</h3>
+          {/* Reaction Parameters Section */}
+          <div className="space-y-6 pt-2 border-t border-[var(--md-outline-variant)]">
+            <h3 className="font-semibold text-[var(--md-on-surface)]">Reaction Parameters</h3>
 
-        <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-6">
           {/* Reaction Volume */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-[var(--md-on-surface)]">
@@ -133,37 +139,37 @@ export const MasterMix: React.FC = () => {
           </div>
         </div>
 
-        {/* Toggles */}
-        <div className="flex flex-col sm:flex-row gap-4 pt-2">
-          {/* Overfill Toggle */}
-          <label className="flex items-center gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={overfillEnabled}
-              onChange={(e) => setOverfillEnabled(e.target.checked)}
-              className="w-5 h-5 rounded border-2 border-[var(--md-outline)] bg-[var(--md-surface-container)] checked:bg-blue-600 checked:border-blue-600 focus:ring-2 focus:ring-blue-500/50 cursor-pointer"
-            />
-            <span className="text-sm font-medium text-[var(--md-on-surface)]">Add 10% Overfill</span>
-          </label>
+            {/* Toggles */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+              {/* Overfill Toggle */}
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={overfillEnabled}
+                  onChange={(e) => setOverfillEnabled(e.target.checked)}
+                  className="w-5 h-5 rounded border-2 border-[var(--md-outline)] bg-[var(--md-surface-container)] checked:bg-blue-600 checked:border-blue-600 focus:ring-2 focus:ring-blue-500/50 cursor-pointer"
+                />
+                <span className="text-sm font-medium text-[var(--md-on-surface)]">Add 10% Overfill</span>
+              </label>
 
-          {/* Enhancer Toggle */}
-          {kit.supportsEnhancer && (
-            <label className="flex items-center gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={enhancerEnabled}
-                onChange={(e) => setEnhancerEnabled(e.target.checked)}
-                className="w-5 h-5 rounded border-2 border-[var(--md-outline)] bg-[var(--md-surface-container)] checked:bg-purple-600 checked:border-purple-600 focus:ring-2 focus:ring-purple-500/50 cursor-pointer"
-              />
-              <span className="text-sm font-medium text-[var(--md-on-surface)]">Add GC Enhancer</span>
-            </label>
-          )}
-        </div>
-      </div>
+              {/* Enhancer Toggle */}
+              {kit.supportsEnhancer && (
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={enhancerEnabled}
+                    onChange={(e) => setEnhancerEnabled(e.target.checked)}
+                    className="w-5 h-5 rounded border-2 border-[var(--md-outline)] bg-[var(--md-surface-container)] checked:bg-purple-600 checked:border-purple-600 focus:ring-2 focus:ring-purple-500/50 cursor-pointer"
+                  />
+                  <span className="text-sm font-medium text-[var(--md-on-surface)]">Add GC Enhancer</span>
+                </label>
+              )}
+            </div>
+          </div>
 
-      {/* Master Mix Table */}
-      <div className="glass-card rounded-2xl p-6 border border-[var(--md-outline-variant)]">
-        <h3 className="font-semibold text-[var(--md-on-surface)] mb-4">Master Mix Composition</h3>
+          {/* Master Mix Composition Section */}
+          <div className="space-y-4 pt-2 border-t border-[var(--md-outline-variant)]">
+            <h3 className="font-semibold text-[var(--md-on-surface)]">Master Mix Composition</h3>
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -235,37 +241,39 @@ export const MasterMix: React.FC = () => {
               </tr>
             </tbody>
           </table>
-        </div>
+            </div>
 
-        {/* Summary Info */}
-        <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-blue-500/20 rounded-xl">
-          <div className="flex items-start gap-2">
-            <Info className="w-4 h-4 text-blue-600 dark:text-blue-400 mt-0.5 shrink-0" />
-            <div className="text-xs text-blue-900 dark:text-blue-200 space-y-1">
-              <p>
-                <span className="font-semibold">Preparing master mix for {calculation.effectiveSampleCount} reactions</span>
-                {overfillEnabled && ` (${sampleCount} samples + 10% overfill)`}
-              </p>
-              <p>Mix all components except template DNA and polymerase. Aliquot {calculation.reactionVolume - 2} µL into PCR tubes, then add template and enzyme.</p>
+            {/* Summary Info */}
+            <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-blue-500/20 rounded-xl">
+              <div className="flex items-start gap-2">
+                <Info className="w-4 h-4 text-blue-600 dark:text-blue-400 mt-0.5 shrink-0" />
+                <div className="text-xs text-blue-900 dark:text-blue-200 space-y-1">
+                  <p>
+                    <span className="font-semibold">Preparing master mix for {calculation.effectiveSampleCount} reactions</span>
+                    {overfillEnabled && ` (${sampleCount} samples + 10% overfill)`}
+                  </p>
+                  <p>Mix all components except template DNA and polymerase. Aliquot {calculation.reactionVolume - 2} µL into PCR tubes, then add template and enzyme.</p>
+                </div>
+              </div>
             </div>
           </div>
+
+          {/* Protocol Notes Section */}
+          {kit.notes && kit.notes.length > 0 && (
+            <div className="space-y-3 pt-2 border-t border-[var(--md-outline-variant)]">
+              <h4 className="text-xs uppercase tracking-wider text-[var(--md-on-surface-variant)] font-bold">Protocol Notes</h4>
+              <ul className="text-xs text-[var(--md-on-surface-variant)] space-y-1">
+                {kit.notes.map((note, index) => (
+                  <li key={index} className="flex gap-2">
+                    <span className="text-[var(--md-outline)]">•</span>
+                    <span>{note}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
-
-      {/* Protocol Notes */}
-      {kit.notes && kit.notes.length > 0 && (
-        <div className="glass-panel rounded-xl p-4 border border-[var(--md-outline-variant)]">
-          <h4 className="text-xs uppercase tracking-wider text-[var(--md-on-surface-variant)] font-bold mb-3">Protocol Notes</h4>
-          <ul className="text-xs text-[var(--md-on-surface-variant)] space-y-1">
-            {kit.notes.map((note, index) => (
-              <li key={index} className="flex gap-2">
-                <span className="text-[var(--md-outline)]">•</span>
-                <span>{note}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
     </div>
   );
 };
