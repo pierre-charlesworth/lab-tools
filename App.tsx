@@ -92,15 +92,6 @@ const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>('dashboard');
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
 
-  // Verification: Test Supabase Connection
-  useEffect(() => {
-    supabase.from('profiles').select('count', { count: 'exact', head: true })
-      .then(({ count, error }) => {
-        if (error) console.error('Supabase Connection Error:', error)
-        else console.log('✅ Supabase Connected! Profiles count:', count)
-      })
-  }, []);
-
   // Data State
   const [experiments, setExperiments] = useState<Experiment[]>([createNewExperiment(0)]);
   const [timers, setTimers] = useState<StandaloneTimer[]>([]);
