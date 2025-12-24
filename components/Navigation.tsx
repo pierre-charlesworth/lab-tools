@@ -118,6 +118,18 @@ export const NavigationRail: React.FC<NavigationProps & { isDarkMode: boolean; o
                   </div>
                   <span className="font-semibold text-sm">Quick Timer</span>
                 </button>
+
+                {/* 4. New Protocol */}
+                <button
+                  onClick={() => handleNewAction('protocol')}
+                  className="glass-card flex items-center gap-3 px-4 py-3 rounded-2xl hover:scale-105 active:scale-95 transition-all duration-200 text-indigo-700 dark:text-indigo-400 bg-white/90 dark:bg-zinc-900/90 shadow-xl border border-white/20 animate-in fade-in zoom-in-50 slide-in-from-left-4 duration-300 fill-mode-forwards"
+                  style={{ animationDelay: '225ms' }}
+                >
+                  <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center shrink-0">
+                    <Library className="w-5 h-5" />
+                  </div>
+                  <span className="font-semibold text-sm">New Protocol</span>
+                </button>
               </div>
             </>
           )}
