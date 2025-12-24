@@ -129,7 +129,7 @@ export const M3TextField: React.FC<M3TextFieldProps> = ({
       {/* Floating Label */}
       <label className={`
         absolute left-3 top-0 -translate-y-1/2 px-1 text-xs text-[var(--md-on-surface-variant)] transition-all duration-200
-        bg-[var(--md-surface)]
+        bg-[#FFFFFF] dark:bg-[var(--md-surface-container)] rounded-sm
         peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-[var(--md-on-surface-variant)]
         peer-focus:top-0 peer-focus:text-xs peer-focus:text-[var(--md-primary)]
         peer-disabled:opacity-50
@@ -149,8 +149,8 @@ export const M3TextField: React.FC<M3TextFieldProps> = ({
       {/* Trailing Suffix / Tooltip */}
       {(suffix || tooltip) && (
         <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
-           {suffix && <span className="text-[var(--md-on-surface-variant)] text-sm font-medium pointer-events-none">{suffix}</span>}
-           {tooltip && <InfoTooltip text={tooltip} />}
+          {suffix && <span className="text-[var(--md-on-surface-variant)] text-sm font-medium pointer-events-none">{suffix}</span>}
+          {tooltip && <InfoTooltip text={tooltip} />}
         </div>
       )}
     </div>
