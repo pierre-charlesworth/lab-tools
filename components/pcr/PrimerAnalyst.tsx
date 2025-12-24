@@ -84,17 +84,12 @@ export const PrimerAnalyst: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto p-4 sm:p-6 space-y-6">
       {/* Single Consolidated Card */}
-      <div className="glass-card rounded-2xl p-6 border border-[var(--md-outline-variant)] space-y-6">
-        {/* Header Inside Card */}
-        <div className="flex items-center justify-between">
+      <div className="glass-card rounded-[var(--md-radius-lg)] border border-[var(--md-outline-variant)]">
+        {/* Header */}
+        <div className="bg-[var(--md-surface-container)] px-6 py-5 rounded-t-[var(--md-radius-lg)] border-b border-[var(--md-outline-variant)] flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
-              <Dna className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-[var(--md-on-surface)]">Primer Analyst</h1>
-              <p className="text-sm text-[var(--md-on-surface-variant)]">Real-time Tm calculation & primer pair validation</p>
-            </div>
+            <Dna className="text-[var(--md-primary)] w-5 h-5" />
+            <h2 className="text-lg font-semibold font-sans tracking-wide text-[var(--md-on-surface)]">Primer Analyst</h2>
           </div>
 
           {/* Save/Recall Buttons (Placeholder) */}
@@ -115,6 +110,9 @@ export const PrimerAnalyst: React.FC = () => {
             </button>
           </div>
         </div>
+
+        {/* Body Content */}
+        <div className="p-6 space-y-6">
 
         {/* Input Section */}
         <div className="grid md:grid-cols-2 gap-6">
@@ -288,15 +286,16 @@ export const PrimerAnalyst: React.FC = () => {
           </div>
         )}
 
-        {/* Info Section */}
-        <div className="p-4 rounded-xl bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)]">
-          <h4 className="text-xs uppercase tracking-wider text-[var(--md-on-surface-variant)] font-bold mb-3">Calculation Method</h4>
-          <div className="text-xs text-[var(--md-on-surface-variant)] space-y-1">
-            <p>• <span className="font-semibold text-[var(--md-on-surface)]">Tm Calculation:</span> Nearest-Neighbor method (SantaLucia 1998)</p>
-            <p>• <span className="font-semibold text-[var(--md-on-surface)]">Salt Concentration:</span> 50 mM (standard PCR conditions)</p>
-            <p>• <span className="font-semibold text-[var(--md-on-surface)]">Primer Concentration:</span> 250 nM</p>
-            <p>• <span className="font-semibold text-[var(--md-on-surface)]">Optimal GC Content:</span> 40-60%</p>
-            <p>• <span className="font-semibold text-[var(--md-on-surface)]">Optimal Tm Difference:</span> ≤ 5°C</p>
+          {/* Info Section */}
+          <div className="p-4 rounded-xl bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)]">
+            <h4 className="text-xs uppercase tracking-wider text-[var(--md-on-surface-variant)] font-bold mb-3">Calculation Method</h4>
+            <div className="text-xs text-[var(--md-on-surface-variant)] space-y-1">
+              <p>• <span className="font-semibold text-[var(--md-on-surface)]">Tm Calculation:</span> Nearest-Neighbor method (SantaLucia 1998)</p>
+              <p>• <span className="font-semibold text-[var(--md-on-surface)]">Salt Concentration:</span> 50 mM (standard PCR conditions)</p>
+              <p>• <span className="font-semibold text-[var(--md-on-surface)]">Primer Concentration:</span> 250 nM</p>
+              <p>• <span className="font-semibold text-[var(--md-on-surface)]">Optimal GC Content:</span> 40-60%</p>
+              <p>• <span className="font-semibold text-[var(--md-on-surface)]">Optimal Tm Difference:</span> ≤ 5°C</p>
+            </div>
           </div>
         </div>
       </div>

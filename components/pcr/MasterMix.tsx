@@ -63,23 +63,19 @@ export const MasterMix: React.FC = () => {
       {/* Single Consolidated Card */}
       <div className="glass-card rounded-[var(--md-radius-lg)] border border-[var(--md-outline-variant)]">
         {/* Header with Icon and Title */}
-        <div className="bg-[var(--md-surface-container)] px-6 py-5 rounded-t-[var(--md-radius-lg)] border-b border-[var(--md-outline-variant)] flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-              <Beaker className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-[var(--md-on-surface)]">Master Mix Calculator</h1>
-              <p className="text-sm text-[var(--md-on-surface-variant)]">{kit.name} - {kit.manufacturer}</p>
-            </div>
-          </div>
+        <div className="bg-[var(--md-surface-container)] px-6 py-5 rounded-t-[var(--md-radius-lg)] border-b border-[var(--md-outline-variant)] flex items-center gap-3">
+          <Beaker className="text-[var(--md-primary)] w-5 h-5" />
+          <h2 className="text-lg font-semibold font-sans tracking-wide text-[var(--md-on-surface)]">Master Mix Calculator</h2>
         </div>
 
         {/* Body Content */}
         <div className="p-6 space-y-6">
           {/* Kit Selector Section */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-[var(--md-on-surface)]">PCR Kit</h3>
+            <div className="flex items-center justify-between">
+              <h3 className="font-semibold text-[var(--md-on-surface)]">PCR Kit</h3>
+              <span className="text-xs font-medium text-[var(--md-on-surface-variant)]">{kit.manufacturer}</span>
+            </div>
             <div className="space-y-2">
               <label className="block text-sm font-medium text-[var(--md-on-surface)]">
                 Select Kit

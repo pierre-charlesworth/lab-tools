@@ -12,6 +12,12 @@ interface M3TextFieldProps {
   suffix?: string;
   tooltip?: string;
   icon?: React.ElementType;
+  // Multiline support
+  multiline?: boolean;
+  rows?: number;
+  // Select support
+  options?: Array<{ label: string; value: string }>;
+  placeholder?: string;
 }
 
 const InfoTooltip: React.FC<{ text: string }> = ({ text }) => (
@@ -46,10 +52,60 @@ export const M3TextField: React.FC<M3TextFieldProps> = ({
   step,
   suffix,
   tooltip,
-  icon: Icon
+  icon: Icon,
+  multiline,
+  rows = 4,
+  options,
+  placeholder: customPlaceholder
 }) => {
-  return (
-    <div className="relative hover:z-30 transition-z duration-0">
+  // Determine which element to render
+  const renderInput = () => {
+    const baseClasses = `
+      peer block w-full rounded-[var(--md-radius)] border bg-transparent px-4
+      text-base text-[var(--md-on-surface)]
+      border-[var(--md-outline)]
+      focus:border-[var(--md-primary)] focus:ring-1 focus:ring-[var(--md-primary)] focus:outline-none
+      disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-[var(--md-surface-container)]
+      placeholder-transparent
+      transition-colors duration-200
+      ${Icon ? 'pl-11' : ''}
+      ${suffix || tooltip ? 'pr-12' : ''}
+    `;
+
+    if (options) {
+      // Render select dropdown
+      return (
+        <select
+          disabled={disabled}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className={`${baseClasses} h-14 py-2.5 appearance-none`}
+        >
+          {options.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+      );
+    }
+
+    if (multiline) {
+      // Render textarea
+      return (
+        <textarea
+          disabled={disabled}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          rows={rows}
+          placeholder=" " /* Required for peer-placeholder-shown */
+          className={`${baseClasses} py-3 resize-none font-mono`}
+        />
+      );
+    }
+
+    // Render regular input
+    return (
       <input
         type={type}
         inputMode={inputMode}
@@ -59,18 +115,16 @@ export const M3TextField: React.FC<M3TextFieldProps> = ({
         onChange={(e) => onChange(e.target.value)}
         placeholder=" " /* Required for peer-placeholder-shown */
         className={`
-          peer block w-full h-14 rounded-[var(--md-radius)] border bg-transparent px-4 py-2.5
-          text-base font-mono text-[var(--md-on-surface)]
-          border-[var(--md-outline)]
-          focus:border-[var(--md-primary)] focus:ring-1 focus:ring-[var(--md-primary)] focus:outline-none
-          disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-[var(--md-surface-container)]
-          placeholder-transparent
-          transition-colors duration-200
+          ${baseClasses} h-14 py-2.5 font-mono
           appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]
-          ${Icon ? 'pl-11' : ''}
-          ${suffix || tooltip ? 'pr-12' : ''}
         `}
       />
+    );
+  };
+
+  return (
+    <div className="relative hover:z-30 transition-z duration-0">
+      {renderInput()}
 
       {/* Floating Label */}
       <label className={`

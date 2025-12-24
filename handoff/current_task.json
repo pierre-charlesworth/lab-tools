@@ -1,6 +1,6 @@
 {
-    "task_id": "18",
-    "task_description": "Refactor PCR module components (`PrimerAnalyst`, `MasterMix`, `VisualCycler`) to match the style of `Calculator.tsx`. \n1. Adopt the 'Material 3' split-header card design (gray header, white/glass body).\n2. Replace standard inputs with 'Filled + Underline' M3 style inputs.\n3. Follow the detailed plan in `spec/implementation_plan_style_alignment.md`.",
+    "task_id": "18b-2",
+    "task_description": "Complete Phase 2 of Style Enforcement by replacing inputs in the PCR Module with `M3TextField`. \n\n**Targets**:\n1. `components/pcr/PrimerAnalyst.tsx`: Replace 2 `textarea` elements with `<M3TextField multiline rows={4} ... />`.\n2. `components/pcr/MasterMix.tsx`: \n   - Replace `select` with `<M3TextField options={...} ... />`.\n   - Replace `input type='number'` with `<M3TextField type='number' ... />`.\n   - **Skip** checkboxes (not supported yet).\n3. `components/pcr/VisualCycler.tsx`: Replace protocol parameter inputs (12+) with `<M3TextField type='number' ... />`. Ensure layout density is preserved.",
     "files_to_edit": [
         "components/pcr/PrimerAnalyst.tsx",
         "components/pcr/MasterMix.tsx",

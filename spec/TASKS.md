@@ -13,7 +13,7 @@
 | 8b | **PCR - Master Mix**: Interactive reaction setup, "One-Touch" overfill, DMSO additive logic, "Check-off" mode. | Done | 8a |
 | 8c | **PCR - Visual Cycler**: "Digital Twin" thermal profile graph, ramp-rate aware timer, stage animations. | Done | 8b |
 | 17 | **Animation Refactor**: Replace custom CSS keyframes with `tailwindcss-animate` plugin. | Done | 15 |
-| 18 | **Style Alignment**: Refactor PCR module to match Growth Calculator's M3 card/input style. | Future | 13,16 |
+| 18 | **Global Style Enforcement**: Phase 2 - Repace ALL PCR module inputs with M3TextField (MasterMix, PrimerAnalyst, VisualCycler). | In Progress | 13,16 |
 
 | 7 | **Backend Integration Research**: Select provider (Supabase/Firebase), design schema for User/Protocols. | Done | None |
 
