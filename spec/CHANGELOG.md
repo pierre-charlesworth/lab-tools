@@ -1,5 +1,13 @@
 # Changelog
 
+## Task 7 - Backend Integration Research
+- **Status**: Completed
+- **Goal**: Select backend provider and design schema.
+- **Results**:
+  - Selected **Supabase** (PostgreSQL) for data integrity and portability.
+  - Designed SQL Schema for `profiles`, `protocols`, `experiments`.
+  - Defined Offline Strategy (TanStack Query).
+
 ## Task 1 - Capacitor Integration
 - **Status**: Issued
 - **Goal**: Initialize Native Android project.

@@ -10,6 +10,7 @@ import { PCRView } from './components/PCRView';
 import { Experiment, StandaloneTimer, View, Protocol } from './types';
 import { Construction } from 'lucide-react';
 import { AIProtocolModal } from './components/AIProtocolModal';
+import { supabase } from './src/lib/supabase';
 
 const createNewExperiment = (count: number): Experiment => ({
   id: crypto.randomUUID(),
@@ -90,6 +91,15 @@ const App: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [currentView, setCurrentView] = useState<View>('dashboard');
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
+
+  // Verification: Test Supabase Connection
+  useEffect(() => {
+    supabase.from('profiles').select('count', { count: 'exact', head: true })
+      .then(({ count, error }) => {
+        if (error) console.error('Supabase Connection Error:', error)
+        else console.log('✅ Supabase Connected! Profiles count:', count)
+      })
+  }, []);
 
   // Data State
   const [experiments, setExperiments] = useState<Experiment[]>([createNewExperiment(0)]);

@@ -12,7 +12,7 @@
 | 8a | **PCR - Primer Analyst**: Real-time Tm calc (Nearest Neighbor), GC warning traffic lights, 3' stability check. | Done | None |
 | 8b | **PCR - Master Mix**: Interactive reaction setup, "One-Touch" overfill, DMSO additive logic, "Check-off" mode. | Done | 8a |
 | 8c | **PCR - Visual Cycler**: "Digital Twin" thermal profile graph, ramp-rate aware timer, stage animations. | Done | 8b |
-| 7 | **Backend Integration Research**: Select provider (Supabase/Firebase), design schema for User/Protocols. | Future | None |
+| 7 | **Backend Integration Research**: Select provider (Supabase/Firebase), design schema for User/Protocols. | Done | None |
 
 | 9 | **Top Bar Refactor**: Remove logo text and theme button. Make background more glassy. | Done | 2 |
 | 9b | **Top Bar Refinement**: Remove logo icon. Left-align mini timers on mobile with horizontal scroll. | Done | 9 |
@@ -25,4 +25,4 @@
 
 | 14 | **Sidebar UX Polish**: "New" cascade menu (Desktop), Square icons (Collapsed), Bottom Theme Toggle. | Done | 13 |
 | 15 | **Animation & Tablet Polish**: Premium "pop" animations for cascades, default collapsed on tablet. | Done | 14 |
-| 16 | **PCR UI Refactor**: Single card Primer Analyst, Collapsible Cycler params, Protocol dropdown. | In Progress | 15 |
+| 16 | **PCR UI Refactor**: Single card Primer Analyst, Collapsible Cycler params, Protocol dropdown. | Done | 15 |
